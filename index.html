@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>访客服务中心</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 头部样式 */
+        .header {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .datetime {
+            margin-top: 15px;
+            font-size: 0.85rem;
+            opacity: 0.8;
+            background: rgba(255,255,255,0.15);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* 卡片基础样式 */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card:nth-child(2) { animation-delay: 0.1s; }
+        .card:nth-child(3) { animation-delay: 0.2s; }
+        .card:nth-child(4) { animation-delay: 0.3s; }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 12px;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        /* 温馨提示卡片 */
+        .tips-card .icon {
+            background: #fff3cd;
+            color: #f59e0b;
+        }
+
+        .tips-list {
+            list-style: none;
+        }
+
+        .tips-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f5f5f5;
+            display: flex;
+            align-items: flex-start;
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .tips-list li:last-child {
+            border-bottom: none;
+        }
+
+        .tips-list li::before {
+            content: "•";
+            color: #f59e0b;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* WiFi卡片 */
+        .wifi-card .icon {
+            background: #dbeafe;
+            color: #3b82f6;
+        }
+
+        .wifi-info {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .wifi-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        .wifi-item:last-child {
+            border-bottom: none;
+        }
+
+        .wifi-label {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .wifi-value {
+            font-weight: 600;
+            color: #1e293b;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+        }
+
+        .copy-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            width: 100%;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .copy-btn:active {
+            transform: scale(0.98);
+        }
+
+        .copy-btn.copied {
+            background: #10b981;
+        }
+
+        /* 打印机卡片 */
+        .printer-card .icon {
+            background: #fce7f3;
+            color: #ec4899;
+        }
+
+        .printer-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: #f1f5f9;
+            padding: 5px;
+            border-radius: 12px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: #64748b;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: white;
+            color: #ec4899;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            font-weight: 600;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .step-list {
+            counter-reset: step;
+            list-style: none;
+        }
+
+        .step-list li {
+            position: relative;
+            padding-left: 45px;
+            margin-bottom: 20px;
+            color: #475569;
+            line-height: 1.7;
+        }
+
+        .step-list li::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #ec4899, #f472b6);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .step-list li strong {
+            color: #1e293b;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .printer-note {
+            background: #fff7ed;
+            border-left: 4px solid #f97316;
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #9a3412;
+        }
+
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+            padding: 20px;
+            font-size: 0.85rem;
+        }
+
+        /* 提示消息 */
+        .toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1rem;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* 响应式优化 */
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <div class="header">
+            <h1>🏢 访客服务中心</h1>
+            <p>扫码获取办公环境使用指南</p>
+            <div class="datetime" id="datetime"></div>
+        </div>
+
+        <!-- 温馨提示 -->
+        <div class="card tips-card">
+            <div class="card-header">
+                <div class="icon">💡</div>
+                <div class="card-title">温馨提示</div>
+            </div>
+            <ul class="tips-list">
+                <li>请保持办公区域安静，避免大声喧哗影响他人工作</li>
+                <li>会议室使用请提前在系统中预约，使用完毕后请关闭设备</li>
+                <li>茶水间提供咖啡和茶包，请节约使用并及时清洁杯具</li>
+                <li>访客WiFi限时24小时，如需延长请联系前台</li>
+                <li>离开座位超过30分钟请带走个人贵重物品</li>
+                <li>如有任何问题，请拨打前台电话：8888 或 微信联系行政小助手</li>
+            </ul>
+        </div>
+
+        <!-- WiFi信息 -->
+        <div class="card wifi-card">
+            <div class="card-header">
+                <div class="icon">📶</div>
+                <div class="card-title">WiFi 连接</div>
+            </div>
+            <div class="wifi-info">
+                <div class="wifi-item">
+                    <span class="wifi-label">网络名称 (SSID)</span>
+                    <span class="wifi-value" id="wifiName">Visitor-Guest-5G</span>
+                </div>
+                <div class="wifi-item">
+                    <span class="wifi-label">密码</span>
+                    <span class="wifi-value" id="wifiPass">Welcome2024</span>
+                </div>
+            </div>
+            <button class="copy-btn" onclick="copyWiFi()">
+                <span>📋</span>
+                <span id="btnText">一键复制密码</span>
+            </button>
+        </div>
+
+        <!-- 打印机使用说明 -->
+        <div class="card printer-card">
+            <div class="card-header">
+                <div class="icon">🖨️</div>
+                <div class="card-title">打印机使用指南</div>
+            </div>
+            
+            <div class="printer-tabs">
+                <button class="tab-btn active" onclick="switchTab('windows')">Windows</button>
+                <button class="tab-btn" onclick="switchTab('mac')">Mac</button>
+                <button class="tab-btn" onclick="switchTab('mobile')">手机打印</button>
+            </div>
+
+            <!-- Windows说明 -->
+            <div id="windows" class="tab-content active">
+                <ol class="step-list">
+                    <li>
+                        <strong>连接打印机</strong>
+                        打开"设置" → "设备" → "打印机和扫描仪" → 点击"添加打印机"
+                    </li>
+                    <li>
+                        <strong>选择设备</strong>
+                        在列表中找到 "Office-Printer-3F" 并点击添加
+                    </li>
+                    <li>
+                        <strong>安装驱动</strong>
+                        系统会自动下载驱动，如失败请访问 192.168.1.100 下载手动安装
+                    </li>
+                    <li>
+                        <strong>开始打印</strong>
+                        打印时选择 "Office-Printer-3F"，支持黑白/彩色自动识别
+                    </li>
+                </ol>
+            </div>
+
+            <!-- Mac说明 -->
+            <div id="mac" class="tab-content">
+                <ol class="step-list">
+                    <li>
+                        <strong>添加打印机</strong>
+                        系统偏好设置 → 打印机与扫描仪 → 点击"+"号
+                    </li>
+                    <li>
+                        <strong>IP地址添加</strong>
+                        选择"IP"标签，地址输入：192.168.1.50，协议：HP JetDirect
+                    </li>
+                    <li>
+                        <strong>选择驱动</strong>
+                        使用选择"软件" → 搜索并选择 "HP Color LaserJet Pro M454"
+                    </li>
+                    <li>
+                        <strong>打印测试</strong>
+                        添加完成后打印测试页确认连接成功
+                    </li>
+                </ol>
+            </div>
+
+            <!-- 手机打印说明 -->
+            <div id="mobile" class="tab-content">
+                <ol class="step-list">
+                    <li>
+                        <strong>连接同一WiFi</strong>
+                        确保手机已连接 Visitor-Guest-5G 网络
+                    </li>
+                    <li>
+                        <strong>iOS用户</strong>
+                        打开文档 → 分享按钮 → 打印 → 选择 "Office-Printer-3F"（AirPrint自动识别）
+                    </li>
+                    <li>
+                        <strong>Android用户</strong>
+                        下载 "HP Smart" App → 添加打印机 → 输入IP 192.168.1.50
+                    </li>
+                    <li>
+                        <strong>微信打印</strong>
+                        关注公众号"云打印助手" → 上传文件 → 选择3楼打印机取件
+                    </li>
+                </ol>
+            </div>
+
+            <div class="printer-note">
+                <strong>💡 小贴士：</strong>打印机位于3楼茶水间旁，支持A4/A3自动双面打印。如遇卡纸或缺墨，请联系行政部（分机：6666）。
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2024 行政部制作 | 最后更新：2024年3月</p>
+        </div>
+    </div>
+
+    <!-- 提示消息 -->
+    <div class="toast" id="toast">已复制到剪贴板！</div>
+
+    <script>
+        // 显示当前时间
+        function updateTime() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric', 
+                weekday: 'long',
+                hour: '2-digit', 
+                minute: '2-digit' 
+            };
+            document.getElementById('datetime').textContent = now.toLocaleDateString('zh-CN', options);
+        }
+        updateTime();
+        setInterval(updateTime, 60000);
+
+        // 复制WiFi密码功能
+        function copyWiFi() {
+            const password = document.getElementById('wifiPass').textContent;
+            const ssid = document.getElementById('wifiName').textContent;
+            const textToCopy = `WiFi名称：${ssid}\n密码：${password}`;
+            
+            // 尝试使用现代API复制
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(textToCopy).then(() => showCopySuccess());
+            } else {
+                // 降级方案
+                const textArea = document.createElement("textarea");
+                textArea.value = textToCopy;
+                textArea.style.position = "fixed";
+                textArea.style.left = "-9999px";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    showCopySuccess();
+                } catch (err) {
+                    // 如果复制失败，显示密码供手动复制
+                    alert(`请手动复制：\nWiFi：${ssid}\n密码：${password}`);
+                }
+                document.body.removeChild(textArea);
+            }
+        }
+
+        function showCopySuccess() {
+            const btn = document.querySelector('.copy-btn');
+            const btnText = document.getElementById('btnText');
+            const toast = document.getElementById('toast');
+            
+            btn.classList.add('copied');
+            btnText.textContent = '复制成功！';
+            
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                btn.classList.remove('copied');
+                btnText.textContent = '一键复制密码';
+                toast.classList.remove('show');
+            }, 2000);
+        }
+
+        // 标签切换功能
+        function switchTab(tabName) {
+            // 切换按钮状态
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // 切换内容
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        // 添加页面可见性检测（统计扫码次数用，可选）
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                console.log('页面可见，记录访问');
+                // 这里可以添加访问统计API调用
+            }
+        });
+    </script>
+</body>
+</html>
