@@ -1114,48 +1114,31 @@
                 </ul>
             </div>
 
-            <!-- 格式规范 -->
-  <div class="card">
-  <div class="card-header">
-    <div class="card-icon">📐</div>
-    <div class="card-title">公文格式规范图解</div>
-  </div>
-  <div class="image-container">
-    <img src="images/format/1.png" alt="公文格式规范图1">
-    <div class="image-caption">公文格式规范图1</div>
-  </div>
-  <div class="image-container">
-    <img src="images/format/2.png" alt="公文格式规范图2">
-    <div class="image-caption">公文格式规范图2</div>
-  </div>
+<div class="preview-grid">
+    <div class="preview-card">
+        <div class="preview-header">
+            <div class="preview-icon">📐</div>
+            <div class="preview-title">公文格式规范图解</div>
+        </div>
+        <div class="preview-desc">查看完整的公文格式设置图解，包含字体、段落、页边距等详细说明。</div>
+        <button class="preview-btn" onclick="openModal('format')">
+            <span>🔍</span> 点击预览格式规范
+        </button>
+    </div>
+    <div class="preview-card">
+        <div class="preview-header">
+            <div class="preview-icon">📑</div>
+            <div class="preview-title">请示、报告规范图解</div>
+        </div>
+        <div class="preview-desc">查看请示和报告的撰写规范、格式要求及示例说明。</div>
+        <button class="preview-btn orange" onclick="openModal('report')">
+            <span>🔍</span> 点击预览请示报告规范
+        </button>
+    </div>
 </div>
 
-<div class="card">
-  <div class="card-header">
-    <div class="card-icon">📑</div>
-    <div class="card-title">请示、报告规范图解</div>
-  </div>
-  <div class="image-container">
-    <img src="images/report/3.jpg" alt="请示报告图1">
-    <div class="image-caption">请示报告图1</div>
-  </div>
-  <div class="image-container">
-    <img src="images/report/4.jpg" alt="请示报告图2">
-    <div class="image-caption">请示报告图2</div>
-  </div>
-  <div class="image-container">
-    <img src="images/report/5.jpg" alt="请示报告图3">
-    <div class="image-caption">请示报告图3</div>
-  </div>
-  <div class="image-container">
-    <img src="images/report/6.jpg" alt="请示报告图4">
-    <div class="image-caption">请示报告图4</div>
-  </div>
-</div>
-
-<!-- 如果需要提示，可以单独写在 card 外 -->
 <div class="tip-box">
-    <strong>💡 提示：</strong>图片已直接显示在页面，可保存到本地参考使用。
+    <strong>💡 提示：</strong>点击预览按钮查看详细图解，支持多张图片浏览。建议保存图片到本地参考使用。
 </div>
 
     </main>
@@ -1243,9 +1226,11 @@
             }, 2000);
         }
 
+
+
 let modalImages=[], currentIndex=0;
 
-// PNG 单图
+// PNG 单图（打印机用）
 function showSingleImage(src, title){
     const modal=document.getElementById('modal');
     modal.classList.add('active');
@@ -1255,6 +1240,27 @@ function showSingleImage(src, title){
     showCurrentImage(title);
 }
 
+// JPG 多图（公文格式和请示报告用）
+function openModal(type){
+    const modal=document.getElementById('modal');
+    modal.classList.add('active');
+    document.body.style.overflow='hidden';
+    
+    if(type==='format'){
+        modalImages=['images/format/1.jpg','images/format/2.jpg'];
+    }
+    else if(type==='report'){
+        modalImages=[
+            'images/report/3.jpg',
+            'images/report/4.jpg',
+            'images/report/5.jpg',
+            'images/report/6.jpg'
+        ];
+    }
+    
+    currentIndex=0;
+    showCurrentImage(type==='format'?'公文格式':'请示报告');
+}
 
 // 显示当前图片
 function showCurrentImage(title){
@@ -1263,7 +1269,6 @@ function showCurrentImage(title){
     const modalTitle=document.getElementById('modalTitle');
     modalTitle.textContent=title||'图片预览';
 }
-
 
 // 关闭
 function closeModal(e){
@@ -1276,6 +1281,7 @@ function closeModal(e){
 }
 
 document.addEventListener('keydown', e=>{if(e.key==='Escape') closeModal();});
+
     </script>
 </body>
 </html>
