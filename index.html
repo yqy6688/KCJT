@@ -739,6 +739,64 @@
             transform: translate(-50%, -50%) scale(1);
         }
 
+/* 图片切换按钮 */
+.modal-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    background: rgba(255,255,255,0.9);
+    border: none;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.modal-nav:hover {
+    background: white;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.modal-nav.prev {
+    left: 20px;
+}
+
+.modal-nav.next {
+    right: 20px;
+}
+
+.modal-nav:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* 图片计数器 */
+.modal-counter {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    z-index: 10;
+}
+
+/* 触摸滑动提示 */
+.modal-body {
+    position: relative;
+    touch-action: pan-y;
+}
+
         /* 首页欢迎 */
         .welcome-card {
             background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1));
@@ -1143,18 +1201,24 @@
 
     </main>
 
-    <!-- 图片弹窗 -->
-    <div class="modal-overlay" id="modal" onclick="closeModal(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <span class="modal-title" id="modalTitle">图片预览</span>
-                <button class="modal-close" onclick="closeModal()">✕</button>
-            </div>
-            <div class="modal-body" id="modalBody">
-                <!-- 动态插入图片 -->
-            </div>
+<!-- 图片弹窗 -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <span class="modal-title" id="modalTitle">图片预览</span>
+            <button class="modal-close" onclick="closeModal()">✕</button>
         </div>
+        <div class="modal-body" id="modalBody">
+            <!-- 动态插入图片 -->
+        </div>
+        <!-- 左右切换按钮 -->
+        <button class="modal-nav prev" id="prevBtn" onclick="prevImage()">‹</button>
+        <button class="modal-nav next" id="nextBtn" onclick="nextImage()">›</button>
+        <!-- 图片计数器 -->
+        <div class="modal-counter" id="modalCounter">1 / 1</div>
     </div>
+</div>
+
 
     <!-- 提示消息 -->
     <div class="toast" id="toast">已复制到剪贴板！</div>
@@ -1229,6 +1293,8 @@
 
 
 let modalImages=[], currentIndex=0;
+let touchStartX = 0;
+let touchEndX = 0;
 
 // PNG 单图（打印机用）
 function showSingleImage(src, title){
@@ -1237,7 +1303,7 @@ function showSingleImage(src, title){
     document.body.style.overflow='hidden';
     modalImages=[src];
     currentIndex=0;
-    showCurrentImage(title);
+    updateModalUI(title);
 }
 
 // JPG 多图（公文格式和请示报告用）
@@ -1259,16 +1325,92 @@ function openModal(type){
     }
     
     currentIndex=0;
-    showCurrentImage(type==='format'?'公文格式':'请示报告');
+    updateModalUI(type==='format'?'公文格式':'请示报告');
 }
 
-// 显示当前图片
-function showCurrentImage(title){
+// 更新弹窗UI（显示图片+按钮状态+计数器）
+function updateModalUI(title){
     const body=document.getElementById('modalBody');
-    body.innerHTML=`<img src="${modalImages[currentIndex]}" alt="预览图片">`;
     const modalTitle=document.getElementById('modalTitle');
-    modalTitle.textContent=title||'图片预览';
+    const prevBtn=document.getElementById('prevBtn');
+    const nextBtn=document.getElementById('nextBtn');
+    const counter=document.getElementById('modalCounter');
+    
+    // 显示当前图片
+    body.innerHTML=`<img src="${modalImages[currentIndex]}" alt="预览图片" id="modalImg">`;
+    modalTitle.textContent=title || '图片预览';
+    
+    // 更新计数器
+    counter.textContent=`${currentIndex + 1} / ${modalImages.length}`;
+    
+    // 控制按钮显示/隐藏
+    if(modalImages.length <= 1){
+        prevBtn.style.display='none';
+        nextBtn.style.display='none';
+        counter.style.display='none';
+    } else {
+        prevBtn.style.display='flex';
+        nextBtn.style.display='flex';
+        counter.style.display='block';
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex === modalImages.length - 1;
+    }
+    
+    // 绑定触摸事件
+    const img = document.getElementById('modalImg');
+    if(img){
+        img.addEventListener('touchstart', handleTouchStart, {passive: true});
+        img.addEventListener('touchend', handleTouchEnd, {passive: true});
+    }
 }
+
+// 上一张
+function prevImage(){
+    if(currentIndex > 0){
+        currentIndex--;
+        updateModalUI();
+    }
+}
+
+// 下一张
+function nextImage(){
+    if(currentIndex < modalImages.length - 1){
+        currentIndex++;
+        updateModalUI();
+    }
+}
+
+// 触摸滑动处理
+function handleTouchStart(e){
+    touchStartX = e.changedTouches[0].screenX;
+}
+
+function handleTouchEnd(e){
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+}
+
+function handleSwipe(){
+    const swipeThreshold = 50;
+    const diff = touchStartX - touchEndX;
+    
+    if(Math.abs(diff) > swipeThreshold){
+        if(diff > 0){
+            // 向左滑，下一张
+            nextImage();
+        } else {
+            // 向右滑，上一张
+            prevImage();
+        }
+    }
+}
+
+// 键盘左右键支持
+document.addEventListener('keydown', e=>{
+    if(e.key==='Escape') closeModal();
+    if(e.key==='ArrowLeft') prevImage();
+    if(e.key==='ArrowRight') nextImage();
+});
 
 // 关闭
 function closeModal(e){
@@ -1276,7 +1418,11 @@ function closeModal(e){
         const modal=document.getElementById('modal');
         modal.classList.remove('active');
         document.body.style.overflow='';
-        setTimeout(()=>document.getElementById('modalBody').innerHTML='',300);
+        setTimeout(()=>{
+            document.getElementById('modalBody').innerHTML='';
+            modalImages=[];
+            currentIndex=0;
+        }, 300);
     }
 }
 
