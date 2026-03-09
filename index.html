@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>访客服务中心</title>
+    <title>科产集团访客服务中心</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 50%, #2b6cb0 100%);
             min-height: 100vh;
             padding: 20px;
             -webkit-tap-highlight-color: transparent;
@@ -40,7 +40,21 @@
         .header h1 {
             font-size: 1.8rem;
             margin-bottom: 10px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .header .logo {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 16px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
         }
 
         .header p {
@@ -65,14 +79,14 @@
             border-radius: 20px;
             padding: 25px;
             margin-bottom: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             animation: slideUp 0.6s ease-out;
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
         }
 
         @keyframes slideUp {
@@ -83,6 +97,8 @@
         .card:nth-child(2) { animation-delay: 0.1s; }
         .card:nth-child(3) { animation-delay: 0.2s; }
         .card:nth-child(4) { animation-delay: 0.3s; }
+        .card:nth-child(5) { animation-delay: 0.4s; }
+        .card:nth-child(6) { animation-delay: 0.5s; }
 
         .card-header {
             display: flex;
@@ -109,38 +125,6 @@
             font-weight: 600;
         }
 
-        /* 温馨提示卡片 */
-        .tips-card .icon {
-            background: #fff3cd;
-            color: #f59e0b;
-        }
-
-        .tips-list {
-            list-style: none;
-        }
-
-        .tips-list li {
-            padding: 12px 0;
-            border-bottom: 1px solid #f5f5f5;
-            display: flex;
-            align-items: flex-start;
-            color: #555;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .tips-list li:last-child {
-            border-bottom: none;
-        }
-
-        .tips-list li::before {
-            content: "•";
-            color: #f59e0b;
-            font-weight: bold;
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-
         /* WiFi卡片 */
         .wifi-card .icon {
             background: #dbeafe;
@@ -158,7 +142,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
+            padding: 12px 0;
             border-bottom: 1px dashed #e2e8f0;
         }
 
@@ -175,14 +159,14 @@
             font-weight: 600;
             color: #1e293b;
             font-family: 'Courier New', monospace;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         .copy-btn {
-            background: #3b82f6;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
             color: white;
             border: none;
-            padding: 12px 24px;
+            padding: 14px 24px;
             border-radius: 25px;
             width: 100%;
             font-size: 1rem;
@@ -192,6 +176,8 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
         }
 
         .copy-btn:active {
@@ -199,18 +185,136 @@
         }
 
         .copy-btn.copied {
-            background: #10b981;
+            background: linear-gradient(135deg, #10b981, #059669);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        /* 环境维护卡片 */
+        .env-card .icon {
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        .env-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .env-item {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 15px;
+            border-left: 4px solid #059669;
+        }
+
+        .env-item-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 1rem;
+        }
+
+        .env-icon {
+            width: 32px;
+            height: 32px;
+            background: #d1fae5;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .env-desc {
+            color: #64748b;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            padding-left: 42px;
+        }
+
+        /* 办公设备卡片 */
+        .device-card .icon {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .device-list {
+            list-style: none;
+        }
+
+        .device-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f5f5f5;
+            display: flex;
+            align-items: flex-start;
+            color: #475569;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .device-list li:last-child {
+            border-bottom: none;
+        }
+
+        .device-list li::before {
+            content: "⚡";
+            margin-right: 10px;
+            font-size: 1rem;
+        }
+
+        /* 着装礼仪卡片 */
+        .dress-card .icon {
+            background: #fce7f3;
+            color: #db2777;
+        }
+
+        .dress-section {
+            margin-bottom: 20px;
+        }
+
+        .dress-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .dress-title {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dress-content {
+            color: #64748b;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            padding-left: 8px;
+        }
+
+        .dress-content strong {
+            color: #475569;
+        }
+
+        .dress-divider {
+            height: 1px;
+            background: #e2e8f0;
+            margin: 15px 0;
         }
 
         /* 打印机卡片 */
         .printer-card .icon {
-            background: #fce7f3;
-            color: #ec4899;
+            background: #ede9fe;
+            color: #7c3aed;
         }
 
         .printer-tabs {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             margin-bottom: 20px;
             background: #f1f5f9;
             padding: 5px;
@@ -224,14 +328,15 @@
             background: transparent;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #64748b;
             transition: all 0.3s;
+            font-weight: 500;
         }
 
         .tab-btn.active {
             background: white;
-            color: #ec4899;
+            color: #7c3aed;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             font-weight: 600;
         }
@@ -253,9 +358,10 @@
         .step-list li {
             position: relative;
             padding-left: 45px;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             color: #475569;
             line-height: 1.7;
+            font-size: 0.9rem;
         }
 
         .step-list li::before {
@@ -264,22 +370,23 @@
             position: absolute;
             left: 0;
             top: 0;
-            width: 30px;
-            height: 30px;
-            background: linear-gradient(135deg, #ec4899, #f472b6);
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #7c3aed, #a78bfa);
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .step-list li strong {
             color: #1e293b;
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
+            font-size: 0.95rem;
         }
 
         .printer-note {
@@ -288,8 +395,9 @@
             padding: 15px;
             border-radius: 0 8px 8px 0;
             margin-top: 20px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #9a3412;
+            line-height: 1.6;
         }
 
         /* 页脚 */
@@ -306,27 +414,60 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0);
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.85);
             color: white;
-            padding: 15px 30px;
+            padding: 16px 32px;
             border-radius: 30px;
             font-size: 1rem;
             z-index: 1000;
             transition: transform 0.3s ease;
             pointer-events: none;
+            backdrop-filter: blur(10px);
         }
 
         .toast.show {
             transform: translate(-50%, -50%) scale(1);
         }
 
+        /* 展开/收起功能 */
+        .expand-btn {
+            background: #f1f5f9;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            color: #64748b;
+            font-size: 0.85rem;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        .expand-btn:hover {
+            background: #e2e8f0;
+        }
+
+        .expandable-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .expandable-content.expanded {
+            max-height: 1000px;
+        }
+
         /* 响应式优化 */
         @media (max-width: 480px) {
             .header h1 {
-                font-size: 1.5rem;
+                font-size: 1.4rem;
             }
             .card {
                 padding: 20px;
+            }
+            .env-desc {
+                padding-left: 0;
+                margin-top: 8px;
             }
         }
     </style>
@@ -335,25 +476,10 @@
     <div class="container">
         <!-- 头部 -->
         <div class="header">
-            <h1>🏢 访客服务中心</h1>
-            <p>扫码获取办公环境使用指南</p>
+            <div class="logo">🏢</div>
+            <h1>科产集团访客服务中心</h1>
+            <p>办公环境使用指南与访客服务</p>
             <div class="datetime" id="datetime"></div>
-        </div>
-
-        <!-- 温馨提示 -->
-        <div class="card tips-card">
-            <div class="card-header">
-                <div class="icon">💡</div>
-                <div class="card-title">温馨提示</div>
-            </div>
-            <ul class="tips-list">
-                <li>请保持办公区域安静，避免大声喧哗影响他人工作</li>
-                <li>会议室使用请提前在系统中预约，使用完毕后请关闭设备</li>
-                <li>茶水间提供咖啡和茶包，请节约使用并及时清洁杯具</li>
-                <li>访客WiFi限时24小时，如需延长请联系前台</li>
-                <li>离开座位超过30分钟请带走个人贵重物品</li>
-                <li>如有任何问题，请拨打前台电话：8888 或 微信联系行政小助手</li>
-            </ul>
         </div>
 
         <!-- WiFi信息 -->
@@ -364,18 +490,126 @@
             </div>
             <div class="wifi-info">
                 <div class="wifi-item">
-                    <span class="wifi-label">网络名称 (SSID)</span>
-                    <span class="wifi-value" id="wifiName">Visitor-Guest-5G</span>
+                    <span class="wifi-label">5G 网络</span>
+                    <span class="wifi-value">KCJT-5G</span>
+                </div>
+                <div class="wifi-item">
+                    <span class="wifi-label">2.4G 网络</span>
+                    <span class="wifi-value">KCJT-2.4G</span>
                 </div>
                 <div class="wifi-item">
                     <span class="wifi-label">密码</span>
-                    <span class="wifi-value" id="wifiPass">Welcome2024</span>
+                    <span class="wifi-value" id="wifiPass">kcjt240208</span>
                 </div>
             </div>
             <button class="copy-btn" onclick="copyWiFi()">
                 <span>📋</span>
-                <span id="btnText">一键复制密码</span>
+                <span id="btnText">一键复制WiFi信息</span>
             </button>
+        </div>
+
+        <!-- 办公环境维护 -->
+        <div class="card env-card">
+            <div class="card-header">
+                <div class="icon">🌿</div>
+                <div class="card-title">办公环境维护</div>
+            </div>
+            <div class="env-grid">
+                <div class="env-item">
+                    <div class="env-item-header">
+                        <div class="env-icon">💼</div>
+                        <span>工位</span>
+                    </div>
+                    <div class="env-desc">保持工位环境整洁，养护身边花草</div>
+                </div>
+                <div class="env-item">
+                    <div class="env-item-header">
+                        <div class="env-icon">☕</div>
+                        <span>茶水间</span>
+                    </div>
+                    <div class="env-desc">共同维护茶水间的卫生、整洁与安全，确保废弃餐巾纸不遗留在台面，台面积水随手擦干等</div>
+                </div>
+                <div class="env-item">
+                    <div class="env-item-header">
+                        <div class="env-icon">🤝</div>
+                        <span>会议室</span>
+                    </div>
+                    <div class="env-desc">会议室使用完毕后及时恢复原样，会议材料、茶杯不遗留</div>
+                </div>
+                <div class="env-item">
+                    <div class="env-item-header">
+                        <div class="env-icon">🧊</div>
+                        <span>冰箱</span>
+                    </div>
+                    <div class="env-desc">冰箱内不放置味道过重食品，过期食物及时处理</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 办公设备 -->
+        <div class="card device-card">
+            <div class="card-header">
+                <div class="icon">💻</div>
+                <div class="card-title">办公设备使用规范</div>
+            </div>
+            <ul class="device-list">
+                <li>下班后关闭空调、电灯</li>
+                <li>会议结束后及时关闭大电视机</li>
+                <li>借用笔记本电脑时注意维护设备，及时交还至党群工作部（综合）</li>
+                <li>材料双面打印，讨论稿非必要不彩打</li>
+            </ul>
+        </div>
+
+        <!-- 着装礼仪 -->
+        <div class="card dress-card">
+            <div class="card-header">
+                <div class="icon">👔</div>
+                <div class="card-title">着装礼仪规范</div>
+            </div>
+            <div class="dress-content" style="color: #64748b; font-size: 0.9rem; line-height: 1.8; margin-bottom: 15px;">
+                进入办公场所着装与仪表仪容要端庄、稳重、大方、干练，符合国企工作人员形象礼仪要求
+            </div>
+            
+            <div class="dress-section">
+                <div class="dress-title">👨 着装得体（男性）</div>
+                <div class="dress-content">
+                    建议着衬衫、夹克、西装等服饰，夏季可穿短袖衫或T恤衫；<br>
+                    <strong>禁止：</strong>不穿背心、短裤、花衣裤等奇异服装
+                </div>
+            </div>
+            
+            <div class="dress-section">
+                <div class="dress-title">👩 着装得体（女性）</div>
+                <div class="dress-content">
+                    建议着职业装和朴素大方衣着；<br>
+                    <strong>禁止：</strong>不穿低胸、露背、露肩、露脐装和紧身装、透视装、吊带装，不穿超短裙、超短裤
+                </div>
+            </div>
+
+            <div class="dress-divider"></div>
+
+            <div class="dress-section">
+                <div class="dress-title">✨ 仪表得体（男性）</div>
+                <div class="dress-content">
+                    不穿拖鞋，不纹身，不留长发，不染彩发，不扎辫子，不蓄长胡须，不佩戴项链、手链、手珠等饰物
+                </div>
+            </div>
+
+            <div class="dress-section">
+                <div class="dress-title">✨ 仪表得体（女性）</div>
+                <div class="dress-content">
+                    不穿拖鞋，不纹身，不染艳丽彩发，不浓妆艳抹，不佩戴张扬性的项链、手链、手珠和耳环等饰物
+                </div>
+            </div>
+
+            <div class="dress-divider"></div>
+
+            <div class="dress-section">
+                <div class="dress-title">🗣️ 言行得体</div>
+                <div class="dress-content">
+                    待人接物讲话文明、举止得体，模范遵守社会公共秩序，不乱扔垃圾，不随地吐痰，不在禁烟场所吸烟，文明行车、不乱停车
+                </div>
+            </div>
         </div>
 
         <!-- 打印机使用说明 -->
@@ -395,20 +629,24 @@
             <div id="windows" class="tab-content active">
                 <ol class="step-list">
                     <li>
-                        <strong>连接打印机</strong>
-                        打开"设置" → "设备" → "打印机和扫描仪" → 点击"添加打印机"
+                        <strong>访问打印机管理页面</strong>
+                        打开浏览器，输入地址：https://192.168.110.26/
                     </li>
                     <li>
-                        <strong>选择设备</strong>
-                        在列表中找到 "Office-Printer-3F" 并点击添加
+                        <strong>登录系统</strong>
+                        使用您的域账号和密码登录打印机管理系统
                     </li>
                     <li>
-                        <strong>安装驱动</strong>
-                        系统会自动下载驱动，如失败请访问 192.168.1.100 下载手动安装
+                        <strong>添加邮箱</strong>
+                        进入个人设置 → 邮箱管理 → 添加常用邮箱地址
                     </li>
                     <li>
-                        <strong>开始打印</strong>
-                        打印时选择 "Office-Printer-3F"，支持黑白/彩色自动识别
+                        <strong>发送打印任务</strong>
+                        将文档发送至打印机邮箱，系统会自动推送至最近的打印机
+                    </li>
+                    <li>
+                        <strong>刷卡取件</strong>
+                        在打印机刷卡区域刷员工卡，选择任务打印
                     </li>
                 </ol>
             </div>
@@ -417,20 +655,24 @@
             <div id="mac" class="tab-content">
                 <ol class="step-list">
                     <li>
-                        <strong>添加打印机</strong>
-                        系统偏好设置 → 打印机与扫描仪 → 点击"+"号
+                        <strong>访问打印机管理页面</strong>
+                        打开Safari/Chrome，输入：https://192.168.110.26/
                     </li>
                     <li>
-                        <strong>IP地址添加</strong>
-                        选择"IP"标签，地址输入：192.168.1.50，协议：HP JetDirect
+                        <strong>系统登录</strong>
+                        输入域账号密码完成身份验证
                     </li>
                     <li>
-                        <strong>选择驱动</strong>
-                        使用选择"软件" → 搜索并选择 "HP Color LaserJet Pro M454"
+                        <strong>配置邮箱</strong>
+                        在账户设置中添加您的邮箱地址用于接收打印通知
                     </li>
                     <li>
-                        <strong>打印测试</strong>
-                        添加完成后打印测试页确认连接成功
+                        <strong>邮件打印</strong>
+                        通过邮件发送文档到指定打印邮箱地址
+                    </li>
+                    <li>
+                        <strong>安全打印</strong>
+                        前往任意联网打印机刷卡认证后输出文档
                     </li>
                 </ol>
             </div>
@@ -439,31 +681,36 @@
             <div id="mobile" class="tab-content">
                 <ol class="step-list">
                     <li>
-                        <strong>连接同一WiFi</strong>
-                        确保手机已连接 Visitor-Guest-5G 网络
+                        <strong>连接WiFi</strong>
+                        确保手机已连接 KCJT-5G 或 KCJT-2.4G 网络
                     </li>
                     <li>
-                        <strong>iOS用户</strong>
-                        打开文档 → 分享按钮 → 打印 → 选择 "Office-Printer-3F"（AirPrint自动识别）
+                        <strong>访问网页</strong>
+                        浏览器访问 https://192.168.110.26/ 并登录
                     </li>
                     <li>
-                        <strong>Android用户</strong>
-                        下载 "HP Smart" App → 添加打印机 → 输入IP 192.168.1.50
+                        <strong>上传文件</strong>
+                        点击"移动打印" → 选择文件上传（支持PDF/Word/图片）
                     </li>
                     <li>
-                        <strong>微信打印</strong>
-                        关注公众号"云打印助手" → 上传文件 → 选择3楼打印机取件
+                        <strong>设置参数</strong>
+                        选择黑白/彩色、单双面、份数等打印参数
+                    </li>
+                    <li>
+                        <strong>就近取件</strong>
+                        前往任意楼层打印机刷卡或扫码取件
                     </li>
                 </ol>
             </div>
 
             <div class="printer-note">
-                <strong>💡 小贴士：</strong>打印机位于3楼茶水间旁，支持A4/A3自动双面打印。如遇卡纸或缺墨，请联系行政部（分机：6666）。
+                <strong>💡 使用提示：</strong>打印机支持刷卡打印和邮箱推送打印两种方式。首次使用请在系统中绑定个人邮箱。如遇问题请联系IT支持（内线：8888）。
             </div>
         </div>
 
         <div class="footer">
-            <p>© 2024 行政部制作 | 最后更新：2024年3月</p>
+            <p>© 科产集团综合部 | 访客服务指南</p>
+            <p style="margin-top: 5px; font-size: 0.8rem;">最后更新：2026年3月</p>
         </div>
     </div>
 
@@ -490,8 +737,7 @@
         // 复制WiFi密码功能
         function copyWiFi() {
             const password = document.getElementById('wifiPass').textContent;
-            const ssid = document.getElementById('wifiName').textContent;
-            const textToCopy = `WiFi名称：${ssid}\n密码：${password}`;
+            const textToCopy = `WiFi名称：KCJT-5G / KCJT-2.4G\n密码：${password}`;
             
             // 尝试使用现代API复制
             if (navigator.clipboard && window.isSecureContext) {
@@ -510,8 +756,7 @@
                     document.execCommand('copy');
                     showCopySuccess();
                 } catch (err) {
-                    // 如果复制失败，显示密码供手动复制
-                    alert(`请手动复制：\nWiFi：${ssid}\n密码：${password}`);
+                    alert(`请手动复制：\nWiFi：KCJT-5G / KCJT-2.4G\n密码：${password}`);
                 }
                 document.body.removeChild(textArea);
             }
@@ -529,7 +774,7 @@
             
             setTimeout(() => {
                 btn.classList.remove('copied');
-                btnText.textContent = '一键复制密码';
+                btnText.textContent = '一键复制WiFi信息';
                 toast.classList.remove('show');
             }, 2000);
         }
@@ -548,14 +793,7 @@
             });
             document.getElementById(tabName).classList.add('active');
         }
-
-        // 添加页面可见性检测（统计扫码次数用，可选）
-        document.addEventListener('visibilitychange', function() {
-            if (!document.hidden) {
-                console.log('页面可见，记录访问');
-                // 这里可以添加访问统计API调用
-            }
-        });
     </script>
 </body>
 </html>
+
