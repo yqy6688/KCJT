@@ -797,10 +797,10 @@
     touch-action: pan-y;
 }
 
-        /* 首页欢迎 */
+        /* 首页欢迎 - 改为白色背景 */
         .welcome-card {
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1));
-            border: 2px solid rgba(59, 130, 246, 0.2);
+            background: #ffffff; /* 改为纯白色背景 */
+            border: 2px solid #e2e8f0; /* 改为浅灰色边框 */
             text-align: center;
             padding: 40px 30px;
         }
@@ -906,17 +906,17 @@
             <li><a onclick="navigateTo('wifi')" id="nav-wifi">
                 <span class="nav-icon">📶</span> WiFi连接
             </a></li>
-            <li><a onclick="navigateTo('env')" id="nav-env">
-                <span class="nav-icon">🌿</span> 环境维护
-            </a></li>
-            <li><a onclick="navigateTo('device')" id="nav-device">
-                <span class="nav-icon">💻</span> 办公设备
-            </a></li>
             <li><a onclick="navigateTo('printer')" id="nav-printer">
                 <span class="nav-icon">🖨️</span> 打印机
             </a></li>
             <li><a onclick="navigateTo('document')" id="nav-document">
                 <span class="nav-icon">📄</span> 公文规范
+            </a></li>
+            <li><a onclick="navigateTo('device')" id="nav-device">
+                <span class="nav-icon">💻</span> 办公设备
+            </a></li>
+            <li><a onclick="navigateTo('env')" id="nav-env">
+                <span class="nav-icon">🌿</span> 环境维护
             </a></li>
         </ul>
         <div class="sidebar-footer">
@@ -953,13 +953,13 @@
                     <div class="quick-link-icon">🖨️</div>
                     <div class="quick-link-text">打印机使用</div>
                 </div>
-                <div class="quick-link" onclick="navigateTo('env')">
-                    <div class="quick-link-icon">🌿</div>
-                    <div class="quick-link-text">环境维护</div>
-                </div>
                 <div class="quick-link" onclick="navigateTo('document')">
                     <div class="quick-link-icon">📄</div>
                     <div class="quick-link-text">公文规范</div>
+                </div>
+                <div class="quick-link" onclick="navigateTo('device')">
+                    <div class="quick-link-icon">💻</div>
+                    <div class="quick-link-text">办公设备</div>
                 </div>
             </div>
         </div>
@@ -998,72 +998,6 @@
 
             <div class="tip-box">
                 <strong>💡 提示：</strong>2.4G网络穿透力强，适合远距离连接；5G网络速度快，适合近距离使用。建议优先连接2.4G网络。
-            </div>
-        </div>
-
-        <!-- 环境维护页面 -->
-        <div class="page" id="page-env">
-            <div class="page-header">
-                <h1>🌿 办公环境维护</h1>
-                <p>共同维护整洁舒适的办公环境</p>
-            </div>
-
-            <div class="card env-card">
-                <div class="card-header">
-                    <div class="card-icon">🌿</div>
-                    <div class="card-title">环境维护指南</div>
-                </div>
-                <div class="env-grid">
-                    <div class="env-item">
-                        <div class="env-item-header">
-                            <div class="env-icon">💼</div>
-                            <span>工位</span>
-                        </div>
-                        <div class="env-desc">保持工位环境整洁，养护身边花草</div>
-                    </div>
-                    <div class="env-item">
-                        <div class="env-item-header">
-                            <div class="env-icon">☕</div>
-                            <span>茶水间</span>
-                        </div>
-                        <div class="env-desc">共同维护茶水间的卫生、整洁与安全，确保废弃餐巾纸不遗留在台面，台面积水随手擦干等</div>
-                    </div>
-                    <div class="env-item">
-                        <div class="env-item-header">
-                            <div class="env-icon">🤝</div>
-                            <span>会议室</span>
-                        </div>
-                        <div class="env-desc">会议室使用完毕后及时恢复原样，会议材料、茶杯不遗留</div>
-                    </div>
-                    <div class="env-item">
-                        <div class="env-item-header">
-                            <div class="env-icon">🧊</div>
-                            <span>冰箱</span>
-                        </div>
-                        <div class="env-desc">冰箱内不放置味道过重食品，过期食物及时处理</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 办公设备页面 -->
-        <div class="page" id="page-device">
-            <div class="page-header">
-                <h1>💻 办公设备使用规范</h1>
-                <p>规范使用，节约资源</p>
-            </div>
-
-            <div class="card device-card">
-                <div class="card-header">
-                    <div class="card-icon">💻</div>
-                    <div class="card-title">设备使用规范</div>
-                </div>
-                <ul class="device-list">
-                    <li><span class="list-icon">❄️</span> 下班后关闭空调、电灯</li>
-                    <li><span class="list-icon">📺</span> 会议结束后及时关闭大电视机</li>
-                    <li><span class="list-icon">💻</span> 借用笔记本电脑时注意维护设备，及时交还至党群工作部（综合）</li>
-                    <li><span class="list-icon">🖨️</span> 材料双面打印，讨论稿非必要不彩打</li>
-                </ul>
             </div>
         </div>
 
@@ -1163,11 +1097,14 @@
                 </div>
                 <p style="color: #64748b; margin-bottom: 15px;">请按照以下规范撰写和排版公文材料：</p>
                 <ul class="format-list">
-                    <li><span class="list-icon">📝</span> 标题：方正小标宋简体二号</li>
-                    <li><span class="list-icon">📄</span> 正文：仿宋_GB2312三号</li>
-                    <li><span class="list-icon">📌</span> 一级标题：黑体三号</li>
-                    <li><span class="list-icon">📎</span> 二级标题：楷体_GB2312三号</li>
-                    <li><span class="list-icon">📏</span> 行距：固定值28-30磅</li>
+                    <li><span class="list-icon">📝</span> 标题：方正小标宋_GBK 二号</li>
+                    <li><span class="list-icon">📝</span> 正文：方正仿宋_GBK 三号</li>
+                    <li><span class="list-icon">📌</span> 一级标题：方正黑体_GBK 三号【一、】</li>
+                    <li><span class="list-icon">📌</span> 二级标题：方正楷体_GBK 三号【（1）】</li>
+                    <li><span class="list-icon">📌</span> 三级标题：方正仿宋_GBK 三号 加粗【1.】</li>
+                    <li><span class="list-icon">📎</span> 行文机构：正文下空三行 仿宋_GBK 三号</li>
+                    <li><span class="list-icon">📏</span> 成文日期：右空四格</li>
+                    <li><span class="list-icon">📄</span> 页码：四号半角宋体</li>
                     <li><span class="list-icon">📐</span> 页边距：上3.7cm、下3.5cm、左2.8cm、右2.6cm</li>
                 </ul>
             </div>
@@ -1198,6 +1135,73 @@
 <div class="tip-box">
     <strong>💡 提示：</strong>点击预览按钮查看详细图解，支持多张图片浏览。建议保存图片到本地参考使用。
 </div>
+</div>
+
+        <!-- 办公设备页面 -->
+        <div class="page" id="page-device">
+            <div class="page-header">
+                <h1>💻 办公设备使用规范</h1>
+                <p>规范使用，节约资源</p>
+            </div>
+
+            <div class="card device-card">
+                <div class="card-header">
+                    <div class="card-icon">💻</div>
+                    <div class="card-title">设备使用规范</div>
+                </div>
+                <ul class="device-list">
+                    <li><span class="list-icon">❄️</span> 下班后关闭空调、电灯</li>
+                    <li><span class="list-icon">📺</span> 会议结束后及时关闭大电视机</li>
+                    <li><span class="list-icon">💻</span> 借用笔记本电脑时注意维护设备，及时交还至党群工作部（综合）</li>
+                    <li><span class="list-icon">🖨️</span> 材料双面打印，讨论稿非必要不彩打</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 环境维护页面 -->
+        <div class="page" id="page-env">
+            <div class="page-header">
+                <h1>🌿 办公环境维护</h1>
+                <p>共同维护整洁舒适的办公环境</p>
+            </div>
+
+            <div class="card env-card">
+                <div class="card-header">
+                    <div class="card-icon">🌿</div>
+                    <div class="card-title">环境维护指南</div>
+                </div>
+                <div class="env-grid">
+                    <div class="env-item">
+                        <div class="env-item-header">
+                            <div class="env-icon">💼</div>
+                            <span>工位</span>
+                        </div>
+                        <div class="env-desc">保持工位环境整洁，养护身边花草</div>
+                    </div>
+                    <div class="env-item">
+                        <div class="env-item-header">
+                            <div class="env-icon">☕</div>
+                            <span>茶水间</span>
+                        </div>
+                        <div class="env-desc">共同维护茶水间的卫生、整洁与安全，确保废弃餐巾纸不遗留在台面，台面积水随手擦干等</div>
+                    </div>
+                    <div class="env-item">
+                        <div class="env-item-header">
+                            <div class="env-icon">🤝</div>
+                            <span>会议室</span>
+                        </div>
+                        <div class="env-desc">会议室使用完毕后及时恢复原样，会议材料、茶杯不遗留</div>
+                    </div>
+                    <div class="env-item">
+                        <div class="env-item-header">
+                            <div class="env-icon">🧊</div>
+                            <span>冰箱</span>
+                        </div>
+                        <div class="env-desc">冰箱内不放置味道过重食品，过期食物及时处理</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </main>
 
