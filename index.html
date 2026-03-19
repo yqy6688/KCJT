@@ -490,6 +490,53 @@
             font-size: 0.95rem;
         }
 
+        /* 链接复制区域 */
+        .link-copy-area {
+            background: #f0f9ff;
+            border: 2px dashed #3b82f6;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .link-display {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #1e293b;
+            word-break: break-all;
+            border: 1px solid #e2e8f0;
+            user-select: all;
+        }
+
+        .link-copy-btn {
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .link-copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .link-copy-btn.copied {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
         /* 图片容器 - 修复点击问题 */
         .image-container {
             margin: 15px 0;
@@ -497,7 +544,7 @@
             overflow: hidden;
             background: #f1f5f9;
             border: 2px solid #e2e8f0;
-            cursor: pointer; /* 手型光标 */
+            cursor: pointer;
             position: relative;
             transition: all 0.2s;
             -webkit-tap-highlight-color: rgba(0,0,0,0.1);
@@ -517,7 +564,6 @@
             width: 100%;
             height: auto;
             display: block;
-            /* 不要pointer-events: none，让图片也能接收点击 */
         }
 
         .image-caption {
@@ -797,70 +843,111 @@
     touch-action: pan-y;
 }
 
-        /* 首页欢迎 - 改为白色背景 */
+        /* 首页欢迎 - 美化版本 */
         .welcome-card {
-            background: #ffffff; /* 改为纯白色背景 */
-            border: 2px solid #e2e8f0; /* 改为浅灰色边框 */
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: none;
             text-align: center;
-            padding: 40px 30px;
+            padding: 50px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
         }
 
         .welcome-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
+            font-size: 5rem;
+            margin-bottom: 25px;
+            display: inline-block;
+            animation: wave 2s ease-in-out infinite;
+            filter: drop-shadow(0 10px 20px rgba(59, 130, 246, 0.3));
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(10deg); }
+            75% { transform: rotate(-10deg); }
         }
 
         .welcome-title {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: #1e293b;
-            margin-bottom: 12px;
-            font-weight: 700;
+            margin-bottom: 16px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1e293b 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.1rem;
+            color: #64748b;
+            margin-bottom: 30px;
+            font-weight: 500;
         }
 
         .welcome-text {
-            color: #64748b;
-            line-height: 1.8;
+            color: #475569;
+            line-height: 2;
             font-size: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
         }
 
-        .quick-links {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-top: 25px;
+        .welcome-features {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 35px;
+            flex-wrap: wrap;
         }
 
-        .quick-link {
-            background: white;
+        .welcome-feature {
+            cursor: pointer; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .welcome-feature-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
             border-radius: 14px;
-            padding: 20px;
-            text-decoration: none;
-            color: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
             transition: all 0.3s;
-            border: 2px solid #e2e8f0;
-            cursor: pointer;
         }
 
-        .quick-link:hover {
-            border-color: #3b82f6;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
-        }
-
-        .quick-link-icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-
-        .quick-link-text {
-            font-weight: 600;
-            font-size: 0.95rem;
+        .welcome-feature:hover .welcome-feature-icon {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2);
         }
 
         /* 响应式 */
         @media (max-width: 768px) {
-            .quick-links {
-                grid-template-columns: 1fr;
+            .welcome-card {
+                padding: 40px 25px;
+            }
+            .welcome-title {
+                font-size: 1.5rem;
+            }
+            .welcome-features {
+                gap: 25px;
             }
             .env-grid {
                 grid-template-columns: 1fr;
@@ -882,6 +969,14 @@
             }
             .sidebar {
                 width: 280px;
+            }
+            .welcome-features {
+                gap: 20px;
+            }
+            .welcome-feature-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
             }
         }
     </style>
@@ -938,28 +1033,32 @@
             <div class="card welcome-card">
                 <div class="welcome-icon">👋</div>
                 <div class="welcome-title">您好，欢迎访问科产集团</div>
+                <div class="welcome-subtitle">访客服务中心</div>
                 <div class="welcome-text">
                     本页面提供办公环境指南、WiFi连接、打印机使用说明等服务。<br>
-                    点击下方快捷入口或左侧菜单开始浏览。
+                    请从左侧菜单选择您需要了解的内容。
                 </div>
-            </div>
-
-            <div class="quick-links">
-                <div class="quick-link" onclick="navigateTo('wifi')">
-                    <div class="quick-link-icon">📶</div>
-                    <div class="quick-link-text">WiFi连接</div>
-                </div>
-                <div class="quick-link" onclick="navigateTo('printer')">
-                    <div class="quick-link-icon">🖨️</div>
-                    <div class="quick-link-text">打印机使用</div>
-                </div>
-                <div class="quick-link" onclick="navigateTo('document')">
-                    <div class="quick-link-icon">📄</div>
-                    <div class="quick-link-text">公文规范</div>
-                </div>
-                <div class="quick-link" onclick="navigateTo('device')">
-                    <div class="quick-link-icon">💻</div>
-                    <div class="quick-link-text">办公设备</div>
+                <div class="welcome-features">
+                    <div class="welcome-feature">
+                        <div class="welcome-feature-icon">📶</div>
+                        <span>WiFi连接</span>
+                    </div>
+                    <div class="welcome-feature">
+                        <div class="welcome-feature-icon">🖨️</div>
+                        <span>打印服务</span>
+                    </div>
+                    <div class="welcome-feature">
+                        <div class="welcome-feature-icon">📄</div>
+                        <span>公文规范</span>
+                    </div>
+                    <div class="welcome-feature">
+                        <div class="welcome-feature-icon">💻</div>
+                        <span>设备使用</span>
+                    </div>
+                    <div class="welcome-feature">
+                       <div class="welcome-feature-icon">🌿</div>
+                       <span>环境维护</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1013,7 +1112,7 @@
                 <div class="method-section">
                     <div class="method-title">
                         <div class="method-number">一</div>
-                        <span>扫描获取文件</span>
+                        <span>扫描获取文件（打印机端）</span>
                     </div>
                     <ol class="step-list">
                         <li>
@@ -1041,8 +1140,19 @@
                 <div class="method-section">
                     <div class="method-title">
                         <div class="method-number">二</div>
-                        <span>通讯录</span>
+                        <span>新增通讯录（电脑端）</span>
                     </div>
+                    
+                    <!-- 链接复制区域 -->
+                    <div class="link-copy-area">
+                        <div style="color: #64748b; font-size: 0.9rem; margin-bottom: 10px;">📎 访问链接（点击复制）</div>
+                        <div class="link-display" id="printerLink">http://192.168.110.26/apps/box/index.html#hashBoxList/hashApps</div>
+                        <button class="link-copy-btn" onclick="copyPrinterLink()">
+                            <span>📋</span>
+                            <span id="linkBtnText">复制链接</span>
+                        </button>
+                    </div>
+                    
                     <p style="color: #64748b; margin-bottom: 15px;">通过通讯录功能，您可以直接选择联系人进行打印或发送（点击图片可放大）：</p>
                     
                     <!-- 图片1 - 直接绑定onclick -->
@@ -1073,7 +1183,7 @@
                         <li><strong>打开通讯录</strong>点击打印界面中的"通讯簿"按钮</li>
                         <li><strong>添加联系人</strong>点击添加联系人按钮</li>
                         <li><strong>新建联系人</strong>填写联系人信息</li>
-                        <li><strong>保存邮箱</strong>填入电子邮箱并保存，完成新建联系人</li>
+                        <li><strong>下载文件</strong>新建完联系人后，在文件夹列表选择对应联系人，选择需要的文件点击下载图标即可获取</li>
                     </ol>
                 </div>
             </div>
@@ -1294,7 +1404,46 @@
             }, 2000);
         }
 
+        // 复制打印机链接
+        function copyPrinterLink() {
+            const link = document.getElementById('printerLink').textContent;
+            
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(link).then(() => showLinkCopySuccess(link));
+            } else {
+                const textArea = document.createElement("textarea");
+                textArea.value = link;
+                textArea.style.cssText = "position:fixed;left:-9999px";
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showLinkCopySuccess(link);
+                } catch (err) {
+                    alert('请手动复制链接：\n' + link);
+                }
+                document.body.removeChild(textArea);
+            }
+        }
 
+        function showLinkCopySuccess(link) {
+            const toast = document.getElementById('toast');
+            toast.textContent = '链接已复制！';
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+                toast.textContent = '已复制到剪贴板！';
+            }, 2000);
+            
+            const btn = document.querySelector('.link-copy-btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span>✓</span><span>已复制</span>';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.classList.remove('copied');
+            }, 2000);
+        }
 
 let modalImages=[], currentIndex=0;
 let touchStartX = 0;
