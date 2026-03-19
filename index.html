@@ -1107,39 +1107,11 @@
                 <p>两种方式，灵活使用</p>
             </div>
 
-            <!-- 方式一 -->
+            <!-- 方式一 ：新增通讯录（电脑端）-->
             <div class="card printer-card">
                 <div class="method-section">
                     <div class="method-title">
                         <div class="method-number">一</div>
-                        <span>扫描获取文件（打印机端）</span>
-                    </div>
-                    <ol class="step-list">
-                        <li>
-                            <strong>点击"保存到文件夹"</strong>
-                            在打印界面选择"保存到文件夹"选项
-                        </li>
-                        <li>
-                            <strong>调节打印参数</strong>
-                            设置页数范围、选择黑白/彩印、单双面打印等选项
-                        </li>
-                        <li>
-                            <strong>选择目标文件夹</strong>
-                            浏览并选择要保存到的文件夹位置
-                        </li>
-                        <li>
-                            <strong>确认保存</strong>
-                            点击确认，文件将保存到指定文件夹
-                        </li>
-                    </ol>
-                </div>
-            </div>
-
-            <!-- 方式二 -->
-            <div class="card printer-card">
-                <div class="method-section">
-                    <div class="method-title">
-                        <div class="method-number">二</div>
                         <span>新增通讯录（电脑端）</span>
                     </div>
                     
@@ -1158,40 +1130,90 @@
                     <!-- 图片1 - 直接绑定onclick -->
                         <div class="image-container" onclick="showSingleImage('1.png', '图1：打开通讯簿界面')">
                         <img src="1.png" alt="通讯录截图1">
-                        <div class="image-caption">图1：打开通讯簿界面（点击放大）</div>
+                        <div class="image-caption">图1：打开通讯簿界面</div>
                     </div>
                     
                     <!-- 图片2 -->
                     <div class="image-container" onclick="showSingleImage('2.png', '图2：点击添加联系人')">
                         <img src="2.png" alt="通讯录截图2" loading="lazy">
-                        <div class="image-caption">图2：点击添加联系人（点击放大）</div>
+                        <div class="image-caption">图2：点击添加联系人</div>
                     </div>
                     
                     <!-- 图片3 -->
                     <div class="image-container" onclick="showSingleImage('3.png', '图3：新建联系人')">
                         <img src="3.png" alt="通讯录截图3" loading="lazy">
-                        <div class="image-caption">图3：新建联系人（点击放大）</div>
+                        <div class="image-caption">图3：新建联系人</div>
                     </div>
                     
                     <!-- 图片4 -->
                     <div class="image-container" onclick="showSingleImage('4.png', '图4：填入电子邮箱并保存')">
                         <img src="4.png" alt="通讯录截图4" loading="lazy">
-                        <div class="image-caption">图4：填入电子邮箱并保存（点击放大）</div>
+                        <div class="image-caption">图4：填入电子邮箱并保存</div>
                     </div>
 
-                    <ol class="step-list" style="margin-top: 20px;">
-                        <li><strong>打开通讯录</strong>点击打印界面中的"通讯簿"按钮</li>
-                        <li><strong>添加联系人</strong>点击添加联系人按钮</li>
-                        <li><strong>新建联系人</strong>填写联系人信息</li>
-                        <li><strong>下载文件</strong>新建完联系人后，在文件夹列表选择对应联系人，选择需要的文件点击下载图标即可获取</li>
-                    </ol>
-                </div>
+<ol class="step-list">
+                <li>
+                    在打印界面点击"扫描并发送"
+                </li>
+                <li>
+                     点击通讯簿选择需要发送的联系人
+                </li>
+                <li>
+                   调节打印参数，设置页数范围、选择黑白/彩印、单双面打印等选项
+                </li>
+                <li>
+                    点击确认，文件将发送到指定邮箱
+                </li>
+            </ol>
+
+                    </div>
             </div>
 
-            <div class="tip-box">
-                <strong>💡 使用提示：</strong>保存到文件夹适合归档备份，通讯录适合快速分享给同事。点击图片可放大查看细节。
+
+            <!-- 方式二 ：新建文件夹（电脑端）-->
+<div class="card printer-card">
+        <div class="method-section">
+            <div class="method-title">
+                <div class="method-number">二</div> 
+                <span>新建文件夹（电脑端）</span>
             </div>
+            
+<div class="image-container" onclick="showSingleImage('6.png', '未登记文件夹')">
+                <img src="6.png" alt="未登记文件夹"> 
+                <div class="image-caption">点击未登记过的文件夹</div>
+            </div>
+
+            <div class="image-container" onclick="showSingleImage('5.png', '登记文件夹')">
+                <img src="5.png" alt="登记文件夹"> 
+                <div class="image-caption">编辑新文件夹</div>
+            </div>
+            
+<ol class="step-list">
+                <li>
+                    在打印界面选择"发送到文件夹"选项
+                </li>
+                <li>
+                     选择文件夹并输入密码
+                </li>
+                <li>
+                   调节打印参数，设置页数范围、选择黑白/彩印、单双面打印等选项
+                </li>
+                <li>
+                    点击确认，文件将保存到指定文件夹，从网页选中即可下载
+                </li>
+            </ol>
+
+                    </div>
+            </div>
+
         </div>
+    </div>
+
+    <div class="tip-box">
+        <strong>💡 使用提示：</strong>通讯录适合快速分享，且无次数上限；新建文件夹适合分类归档，但文件夹内存有限。点击图片可放大查看细节。
+    </div>
+</div>
+            
 
         <!-- 公文规范页面 -->
         <div class="page" id="page-document">
