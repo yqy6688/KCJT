@@ -817,7 +817,7 @@
             cursor: pointer;
             z-index: 10;
             display: none;
-            margin-right: 10px;
+            transition: all 0.2s;
         }
 
         .zoom-reset.show {
@@ -826,6 +826,31 @@
 
         .zoom-reset:hover {
             background: white;
+        }
+
+        /* 下载按钮 */
+        .download-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .download-btn:active {
+            transform: scale(0.95);
         }
 
         /* 提示消息 */
@@ -1249,74 +1274,73 @@
         </div>
 
         <!-- 公文规范页面 -->
-<div class="page" id="page-document">
-    <div class="page-header">
-        <h1>📄 公文格式规范</h1>
-        <p>标准化公文撰写指南</p>
-    </div>
-
-    <div class="card document-card">
-        <div class="card-header">
-            <div class="card-icon">📄</div>
-            <div class="card-title">格式要求</div>
-        </div>
-        <p style="color: #64748b; margin-bottom: 15px;">请按照以下规范撰写和排版公文材料：</p>
-        <ul class="format-list">
-            <li><span class="list-icon">📝</span> 标题：方正小标宋_GBK 二号</li>
-            <li><span class="list-icon">📝</span> 正文：方正仿宋_GBK 三号</li>
-            <li><span class="list-icon">📌</span> 一级标题：方正黑体_GBK 三号【一、】</li>
-            <li><span class="list-icon">📌</span> 二级标题：方正楷体_GBK 三号【（1）】</li>
-            <li><span class="list-icon">📌</span> 三级标题：方正仿宋_GBK 三号 加粗【1.】</li>
-            <li><span class="list-icon">📎</span> 行文机构：正文下空三行 仿宋_GBK 三号</li>
-            <li><span class="list-icon">📏</span> 成文日期：右空四格</li>
-            <li><span class="list-icon">📄</span> 页码：四号半角宋体</li>
-            <li><span class="list-icon">📐</span> 页边距：上3.7cm、下3.5cm、左2.8cm、右2.6cm</li>
-        </ul>
-    </div>
-
-    <div class="preview-grid">
-        <!-- 原有卡片1 -->
-        <div class="preview-card">
-            <div class="preview-header">
-                <div class="preview-icon">📐</div>
-                <div class="preview-title">公文格式规范图解</div>
+        <div class="page" id="page-document">
+            <div class="page-header">
+                <h1>📄 公文格式规范</h1>
+                <p>标准化公文撰写指南</p>
             </div>
-            <div class="preview-desc">查看完整的公文格式设置图解，包含字体、段落、页边距等详细说明。</div>
-            <button class="preview-btn" onclick="openModal('format')">
-                <span>🔍</span> 点击预览格式规范
-            </button>
-        </div>
-        
-        <!-- 原有卡片2 -->
-        <div class="preview-card">
-            <div class="preview-header">
-                <div class="preview-icon">📑</div>
-                <div class="preview-title">请示、报告规范图解</div>
-            </div>
-            <div class="preview-desc">查看请示和报告的撰写规范、格式要求及示例说明。</div>
-            <button class="preview-btn orange" onclick="openModal('report')">
-                <span>🔍</span> 点击预览请示报告规范
-            </button>
-        </div>
-        
-        <!-- 新增报销单据卡片 -->
-        <div class="preview-card">
-            <div class="preview-header">
-                <div class="preview-icon" style="background: #dbeafe;">💰</div>
-                <div class="preview-title">报销单据填写模板</div>
-            </div>
-            <div class="preview-desc">查看报销单据的标准填写格式，包含费用报销单、差旅费报销单等模板示例。</div>
-            <button class="preview-btn" style="background: linear-gradient(135deg, #059669, #047857);" onclick="openModal('reimbursement')">
-                <span>🔍</span> 点击预览报销模板
-            </button>
-        </div>
-    </div>
 
-    <div class="tip-box">
-        <strong>💡 提示：</strong>点击预览按钮查看详细图解，支持多张图片浏览。建议保存图片到本地参考使用。
-    </div>
-</div>
+            <div class="card document-card">
+                <div class="card-header">
+                    <div class="card-icon">📄</div>
+                    <div class="card-title">格式要求</div>
+                </div>
+                <p style="color: #64748b; margin-bottom: 15px;">请按照以下规范撰写和排版公文材料：</p>
+                <ul class="format-list">
+                    <li><span class="list-icon">📝</span> 标题：方正小标宋_GBK 二号</li>
+                    <li><span class="list-icon">📝</span> 正文：方正仿宋_GBK 三号</li>
+                    <li><span class="list-icon">📌</span> 一级标题：方正黑体_GBK 三号【一、】</li>
+                    <li><span class="list-icon">📌</span> 二级标题：方正楷体_GBK 三号【（1）】</li>
+                    <li><span class="list-icon">📌</span> 三级标题：方正仿宋_GBK 三号 加粗【1.】</li>
+                    <li><span class="list-icon">📎</span> 行文机构：正文下空三行 仿宋_GBK 三号</li>
+                    <li><span class="list-icon">📏</span> 成文日期：右空四格</li>
+                    <li><span class="list-icon">📄</span> 页码：四号半角宋体</li>
+                    <li><span class="list-icon">📐</span> 页边距：上3.7cm、下3.5cm、左2.8cm、右2.6cm</li>
+                </ul>
+            </div>
 
+            <div class="preview-grid">
+                <!-- 原有卡片1 -->
+                <div class="preview-card">
+                    <div class="preview-header">
+                        <div class="preview-icon">📐</div>
+                        <div class="preview-title">公文格式规范图解</div>
+                    </div>
+                    <div class="preview-desc">查看完整的公文格式设置图解，包含字体、段落、页边距等详细说明。</div>
+                    <button class="preview-btn" onclick="openModal('format')">
+                        <span>🔍</span> 点击预览格式规范
+                    </button>
+                </div>
+                
+                <!-- 原有卡片2 -->
+                <div class="preview-card">
+                    <div class="preview-header">
+                        <div class="preview-icon">📑</div>
+                        <div class="preview-title">请示、报告规范图解</div>
+                    </div>
+                    <div class="preview-desc">查看请示和报告的撰写规范、格式要求及示例说明。</div>
+                    <button class="preview-btn orange" onclick="openModal('report')">
+                        <span>🔍</span> 点击预览请示报告规范
+                    </button>
+                </div>
+                
+                <!-- 新增报销单据卡片 -->
+                <div class="preview-card">
+                    <div class="preview-header">
+                        <div class="preview-icon" style="background: #dbeafe;">💰</div>
+                        <div class="preview-title">报销单据填写模板</div>
+                    </div>
+                    <div class="preview-desc">查看报销单据的标准填写格式，包含费用报销单、差旅费报销单等模板示例。</div>
+                    <button class="preview-btn" style="background: linear-gradient(135deg, #059669, #047857);" onclick="openModal('reimbursement')">
+                        <span>🔍</span> 点击预览报销模板
+                    </button>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 提示：</strong>点击预览按钮查看详细图解，支持多张图片浏览。建议保存图片到本地参考使用。
+            </div>
+        </div>
 
         <!-- 环境维护页面 -->
         <div class="page" id="page-env">
@@ -1402,8 +1426,11 @@
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-header">
                 <span class="modal-title" id="modalTitle">图片预览</span>
-                <div style="display: flex; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 8px;">
                     <button class="zoom-reset" id="zoomReset" onclick="resetZoom()">↺ 重置</button>
+                    <button class="download-btn" id="downloadBtn" onclick="downloadCurrentImage()" title="下载图片">
+                        <span>⬇️</span> 下载
+                    </button>
                     <button class="modal-close" onclick="closeModal()">✕</button>
                 </div>
             </div>
@@ -1536,7 +1563,6 @@
         let pointX = 0, pointY = 0;
         let startX = 0, startY = 0;
         let initialDistance = 0, initialScale = 1;
-        let lastTouchTime = 0;
         let isPinching = false;
 
         // PNG 单图（打印机用）
@@ -1551,7 +1577,7 @@
             showZoomHint();
         }
 
-        // JPG 多图（公文格式和请示报告用）
+        // JPG 多图（公文格式、请示报告和报销单据用）
         function openModal(type) {
             const modal = document.getElementById('modal');
             modal.classList.add('active');
@@ -1566,22 +1592,24 @@
                     'images/report/5.jpg',
                     'images/report/6.jpg'
                 ];
+            } else if (type === 'reimbursement') {
+                modalImages = [
+                    'images/reimbursement/1.png',
+                    'images/reimbursement/2.png',
+                    'images/reimbursement/3.png'
+                ];
             }
             
-else if(type==='reimbursement'){
-        modalImages=[
-            'images/reimbursement/1.png',
-            'images/reimbursement/2.png',
-            'images/reimbursement/3.png'
-        ];
-    }
-let title = '图片预览';
-    if(type==='format') title='公文格式';
-    else if(type==='report') title='请示报告';
-    else if(type==='reimbursement') title='报销单据填写模板';
-    
-    updateModalUI(title);
-    showZoomHint();
+            currentIndex = 0;
+            resetZoomState();
+            
+            let title = '图片预览';
+            if (type === 'format') title = '公文格式';
+            else if (type === 'report') title = '请示报告';
+            else if (type === 'reimbursement') title = '报销单据填写模板';
+            
+            updateModalUI(title);
+            showZoomHint();
         }
 
         // 重置缩放状态
@@ -1622,6 +1650,57 @@ let title = '图片预览';
         // 重置缩放
         function resetZoom() {
             resetZoomState();
+        }
+
+        // 下载当前图片
+        function downloadCurrentImage() {
+            if (modalImages.length === 0 || currentIndex >= modalImages.length) return;
+            
+            const imgSrc = modalImages[currentIndex];
+            const imgName = imgSrc.split('/').pop() || `image_${currentIndex + 1}.jpg`;
+            
+            // 创建临时链接下载
+            fetch(imgSrc)
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.blob();
+                })
+                .then(blob => {
+                    const blobUrl = window.URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = blobUrl;
+                    link.download = imgName;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(blobUrl);
+                    
+                    showToast('图片下载已开始');
+                })
+                .catch(error => {
+                    // 如果fetch失败，尝试直接下载
+                    const link = document.createElement('a');
+                    link.href = imgSrc;
+                    link.download = imgName;
+                    link.target = '_blank';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    showToast('图片下载已开始');
+                    console.log('Download attempted:', error);
+                });
+        }
+
+        // 显示提示消息
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+                toast.textContent = '已复制到剪贴板！';
+            }, 2000);
         }
 
         // 更新弹窗UI
@@ -1689,15 +1768,12 @@ let title = '图片预览';
             
             if (newScale !== scale) {
                 scale = newScale;
-                // 以鼠标位置为中心缩放（简化版：以图片中心缩放）
                 updateTransform();
             }
         }
 
         // 触摸开始
         function handleTouchStart(e) {
-            lastTouchTime = Date.now();
-            
             if (e.touches.length === 2) {
                 // 双指缩放
                 e.preventDefault();
@@ -1735,7 +1811,6 @@ let title = '图片预览';
             panning = false;
             if (isPinching) {
                 isPinching = false;
-                // 如果缩放小于1，重置
                 if (scale < 1) {
                     resetZoomState();
                 }
@@ -1758,7 +1833,6 @@ let title = '图片预览';
                 startY = e.clientY - pointY;
                 this.style.cursor = 'grabbing';
                 
-                // 临时绑定全局鼠标事件
                 document.onmousemove = handleMouseMove;
                 document.onmouseup = handleMouseUp;
             }
