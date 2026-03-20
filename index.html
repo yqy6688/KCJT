@@ -273,9 +273,9 @@
         /* WiFi卡片 */
         .wifi-card .card-icon { background: #dbeafe; color: #3b82f6; }
         .env-card .card-icon { background: #d1fae5; color: #059669; }
-        .device-card .card-icon { background: #fef3c7; color: #d97706; }
         .printer-card .card-icon { background: #ede9fe; color: #7c3aed; }
         .document-card .card-icon { background: #fee2e2; color: #dc2626; }
+        .wechat-card .card-icon { background: #d1fae5; color: #059669; }
 
         /* WiFi信息 */
         .wifi-info {
@@ -387,11 +387,11 @@
         }
 
         /* 列表样式 */
-        .device-list, .format-list {
+        .format-list {
             list-style: none;
         }
 
-        .device-list li, .format-list li {
+        .format-list li {
             padding: 14px 0;
             border-bottom: 1px solid #f1f5f9;
             display: flex;
@@ -402,7 +402,7 @@
             gap: 12px;
         }
 
-        .device-list li:last-child, .format-list li:last-child {
+        .format-list li:last-child {
             border-bottom: none;
         }
 
@@ -747,14 +747,35 @@
             color: #dc2626;
         }
 
+        /* 可缩放图片容器 */
         .modal-body {
             padding: 24px;
-            overflow-y: auto;
+            overflow: hidden;
             max-height: calc(90vh - 80px);
             text-align: center;
+            position: relative;
+            touch-action: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
         }
 
-        .modal-body img {
+        /* 图片包装器 - 用于缩放 */
+        .img-wrapper {
+            position: relative;
+            transform-origin: center center;
+            transition: transform 0.1s ease-out;
+            cursor: grab;
+            max-width: 100%;
+            max-height: 70vh;
+        }
+
+        .img-wrapper:active {
+            cursor: grabbing;
+        }
+
+        .img-wrapper img {
             max-width: 100%;
             max-height: 70vh;
             height: auto;
@@ -762,7 +783,49 @@
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.2);
             display: block;
-            margin: 0 auto 20px;
+            pointer-events: none;
+        }
+
+        /* 缩放提示 */
+        .zoom-hint {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .zoom-hint.show {
+            opacity: 1;
+        }
+
+        /* 重置按钮 */
+        .zoom-reset {
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            z-index: 10;
+            display: none;
+            margin-right: 10px;
+        }
+
+        .zoom-reset.show {
+            display: block;
+        }
+
+        .zoom-reset:hover {
+            background: white;
         }
 
         /* 提示消息 */
@@ -785,63 +848,57 @@
             transform: translate(-50%, -50%) scale(1);
         }
 
-/* 图片切换按钮 */
-.modal-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 50px;
-    height: 50px;
-    background: rgba(255,255,255,0.9);
-    border: none;
-    border-radius: 50%;
-    font-size: 1.5rem;
-    cursor: pointer;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
+        /* 图片切换按钮 */
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
 
-.modal-nav:hover {
-    background: white;
-    transform: translateY(-50%) scale(1.1);
-}
+        .modal-nav:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.1);
+        }
 
-.modal-nav.prev {
-    left: 20px;
-}
+        .modal-nav.prev {
+            left: 20px;
+        }
 
-.modal-nav.next {
-    right: 20px;
-}
+        .modal-nav.next {
+            right: 20px;
+        }
 
-.modal-nav:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-}
+        .modal-nav:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
 
-/* 图片计数器 */
-.modal-counter {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0,0,0,0.7);
-    color: white;
-    padding: 8px 20px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    z-index: 10;
-}
-
-/* 触摸滑动提示 */
-.modal-body {
-    position: relative;
-    touch-action: pan-y;
-}
+        /* 图片计数器 */
+        .modal-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            z-index: 10;
+        }
 
         /* 首页欢迎 - 美化版本 */
         .welcome-card {
@@ -893,14 +950,6 @@
             color: #64748b;
             margin-bottom: 30px;
             font-weight: 500;
-        }
-
-        .welcome-text {
-            color: #475569;
-            line-height: 2;
-            font-size: 1rem;
-            max-width: 500px;
-            margin: 0 auto;
         }
 
         .welcome-features {
@@ -1010,9 +1059,9 @@
             <li><a onclick="navigateTo('env')" id="nav-env">
                 <span class="nav-icon">🌿</span> 环境维护
             </a></li>
-<li><a onclick="navigateTo('wechat')" id="nav-wechat">
-    <span class="nav-icon">📱</span> 公众号
-</a></li>
+            <li><a onclick="navigateTo('wechat')" id="nav-wechat">
+                <span class="nav-icon">📱</span> 公众号
+            </a></li>
         </ul>
         <div class="sidebar-footer">
             © 科产集团综合部<br>
@@ -1034,7 +1083,7 @@
                 <div class="welcome-title">您好，欢迎访问科产集团</div>
                 <div class="welcome-subtitle">访客服务中心</div>
                 <div class="welcome-features">
-                   <div class="welcome-feature" onclick="navigateTo('wifi')">
+                    <div class="welcome-feature" onclick="navigateTo('wifi')">
                         <div class="welcome-feature-icon">📶</div>
                         <span>WiFi连接</span>
                     </div>
@@ -1046,14 +1095,14 @@
                         <div class="welcome-feature-icon">📄</div>
                         <span>公文规范</span>
                     </div>
-                    <div class="welcome-feature"onclick="navigateTo('env')">
-                       <div class="welcome-feature-icon">🌿</div>
-                       <span>环境维护</span>
+                    <div class="welcome-feature" onclick="navigateTo('env')">
+                        <div class="welcome-feature-icon">🌿</div>
+                        <span>环境维护</span>
                     </div>
-                     <div class="welcome-feature" onclick="navigateTo('wechat')">
-                           <div class="welcome-feature-icon">📱</div>
-                            <span>公众号</span>
-                      </div>
+                    <div class="welcome-feature" onclick="navigateTo('wechat')">
+                        <div class="welcome-feature-icon">📱</div>
+                        <span>公众号</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1123,7 +1172,7 @@
                     <p style="color: #64748b; margin-bottom: 15px;">通过通讯录功能，您可以直接选择联系人进行打印或发送（点击图片可放大）：</p>
                     
                     <!-- 图片1 - 直接绑定onclick -->
-                        <div class="image-container" onclick="showSingleImage('1.png', '图1：打开通讯簿界面')">
+                    <div class="image-container" onclick="showSingleImage('1.png', '图1：打开通讯簿界面')">
                         <img src="1.png" alt="通讯录截图1">
                         <div class="image-caption">图1：打开通讯簿界面</div>
                     </div>
@@ -1146,132 +1195,130 @@
                         <div class="image-caption">图4：填入电子邮箱并保存</div>
                     </div>
 
-<div style="margin-top: 25px; padding-top: 20px; border-top: 2px dashed #e2e8f0;">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
-                <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #7c3aed, #a78bfa); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem;">📱</div>
-                <span style="font-weight: 700; color: #7c3aed; font-size: 1.05rem;">扫描\复印发送（打印机端）</span>
-            </div>
-            <ol class="step-list">
-                <li>
-                    在打印机主界面点击"扫描并发送"
-                </li>
-                <li>
-                     点击通讯簿选择需要发送的联系人
-                </li>
-                <li>
-                   调节打印参数，设置页数范围、选择黑白/彩印、单双面打印等选项
-                </li>
-                <li>
-                    点击确认，文件将发送到指定邮箱
-                </li>
-            </ol>
-        </div>
+                    <div style="margin-top: 25px; padding-top: 20px; border-top: 2px dashed #e2e8f0;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                            <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #7c3aed, #a78bfa); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem;">📱</div>
+                            <span style="font-weight: 700; color: #7c3aed; font-size: 1.05rem;">扫描\复印发送（打印机端）</span>
+                        </div>
+                        <ol class="step-list">
+                            <li>在打印机主界面点击"扫描并发送"</li>
+                            <li>点击通讯簿选择需要发送的联系人</li>
+                            <li>调节打印参数，设置页数范围、选择黑白/彩印、单双面打印等选项</li>
+                            <li>点击确认，文件将发送到指定邮箱</li>
+                        </ol>
                     </div>
+                </div>
             </div>
-
 
             <!-- 方式二 ：新建文件夹（电脑端）-->
-<div class="card printer-card">
-        <div class="method-section">
-            <div class="method-title">
-                <div class="method-number">二</div> 
-                <span>新建文件夹（电脑端）</span>
-            </div>
-            
-<div class="image-container" onclick="showSingleImage('6.png', '未登记文件夹')">
-                <img src="6.png" alt="未登记文件夹"> 
-                <div class="image-caption">点击未登记过的文件夹</div>
-            </div>
-
-            <div class="image-container" onclick="showSingleImage('5.png', '登记文件夹')">
-                <img src="5.png" alt="登记文件夹"> 
-                <div class="image-caption">编辑新文件夹</div>
-            </div>
-            
-<div style="margin-top: 25px; padding-top: 20px; border-top: 2px dashed #e2e8f0;">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
-                <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #7c3aed, #a78bfa); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem;">📱</div>
-                <span style="font-weight: 700; color: #7c3aed; font-size: 1.05rem;">扫描\复印发送（打印机端）</span>
-            </div>
-            <ol class="step-list">
-                <li>
-                    在打印机主界面界面选择"发送到文件夹"选项
-                </li>
-                <li>
-                     选择文件夹并输入密码
-                </li>
-                <li>
-                   调节打印参数，设置页数范围、选择黑白/彩印、单双面打印等选项
-                </li>
-                <li>
-                    点击确认，文件将保存到指定文件夹，从网页选中即可下载
-                </li>
-            </ol>
-        </div>
-
+            <div class="card printer-card">
+                <div class="method-section">
+                    <div class="method-title">
+                        <div class="method-number">二</div> 
+                        <span>新建文件夹（电脑端）</span>
                     </div>
-            </div>
-<div class="tip-box">
-        <strong>💡 使用提示：</strong>通讯录适合快速分享，且无次数上限；新建文件夹适合分类归档，但文件夹内存有限。点击图片可放大查看细节。
-        </div>
-    </div>
+                    
+                    <div class="image-container" onclick="showSingleImage('6.png', '未登记文件夹')">
+                        <img src="6.png" alt="未登记文件夹"> 
+                        <div class="image-caption">点击未登记过的文件夹</div>
+                    </div>
 
+                    <div class="image-container" onclick="showSingleImage('5.png', '登记文件夹')">
+                        <img src="5.png" alt="登记文件夹"> 
+                        <div class="image-caption">编辑新文件夹</div>
+                    </div>
+                    
+                    <div style="margin-top: 25px; padding-top: 20px; border-top: 2px dashed #e2e8f0;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                            <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #7c3aed, #a78bfa); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem;">📱</div>
+                            <span style="font-weight: 700; color: #7c3aed; font-size: 1.05rem;">扫描\复印发送（打印机端）</span>
+                        </div>
+                        <ol class="step-list">
+                            <li>在打印机主界面界面选择"发送到文件夹"选项</li>
+                            <li>选择文件夹并输入密码</li>
+                            <li>调节打印参数，设置页数范围、选择黑白/彩印、单双面打印等选项</li>
+                            <li>点击确认，文件将保存到指定文件夹，从网页选中即可下载</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <strong>💡 使用提示：</strong>通讯录适合快速分享，且无次数上限；新建文件夹适合分类归档，但文件夹内存有限。点击图片可放大查看细节。
+            </div>
+        </div>
 
         <!-- 公文规范页面 -->
-        <div class="page" id="page-document">
-            <div class="page-header">
-                <h1>📄 公文格式规范</h1>
-                <p>标准化公文撰写指南</p>
-            </div>
-
-            <div class="card document-card">
-                <div class="card-header">
-                    <div class="card-icon">📄</div>
-                    <div class="card-title">格式要求</div>
-                </div>
-                <p style="color: #64748b; margin-bottom: 15px;">请按照以下规范撰写和排版公文材料：</p>
-                <ul class="format-list">
-                    <li><span class="list-icon">📝</span> 标题：方正小标宋_GBK 二号</li>
-                    <li><span class="list-icon">📝</span> 正文：方正仿宋_GBK 三号</li>
-                    <li><span class="list-icon">📌</span> 一级标题：方正黑体_GBK 三号【一、】</li>
-                    <li><span class="list-icon">📌</span> 二级标题：方正楷体_GBK 三号【（1）】</li>
-                    <li><span class="list-icon">📌</span> 三级标题：方正仿宋_GBK 三号 加粗【1.】</li>
-                    <li><span class="list-icon">📎</span> 行文机构：正文下空三行 仿宋_GBK 三号</li>
-                    <li><span class="list-icon">📏</span> 成文日期：右空四格</li>
-                    <li><span class="list-icon">📄</span> 页码：四号半角宋体</li>
-                    <li><span class="list-icon">📐</span> 页边距：上3.7cm、下3.5cm、左2.8cm、右2.6cm</li>
-                </ul>
-            </div>
-
-<div class="preview-grid">
-    <div class="preview-card">
-        <div class="preview-header">
-            <div class="preview-icon">📐</div>
-            <div class="preview-title">公文格式规范图解</div>
-        </div>
-        <div class="preview-desc">查看完整的公文格式设置图解，包含字体、段落、页边距等详细说明。</div>
-        <button class="preview-btn" onclick="openModal('format')">
-            <span>🔍</span> 点击预览格式规范
-        </button>
+<div class="page" id="page-document">
+    <div class="page-header">
+        <h1>📄 公文格式规范</h1>
+        <p>标准化公文撰写指南</p>
     </div>
-    <div class="preview-card">
-        <div class="preview-header">
-            <div class="preview-icon">📑</div>
-            <div class="preview-title">请示、报告规范图解</div>
+
+    <div class="card document-card">
+        <div class="card-header">
+            <div class="card-icon">📄</div>
+            <div class="card-title">格式要求</div>
         </div>
-        <div class="preview-desc">查看请示和报告的撰写规范、格式要求及示例说明。</div>
-        <button class="preview-btn orange" onclick="openModal('report')">
-            <span>🔍</span> 点击预览请示报告规范
-        </button>
+        <p style="color: #64748b; margin-bottom: 15px;">请按照以下规范撰写和排版公文材料：</p>
+        <ul class="format-list">
+            <li><span class="list-icon">📝</span> 标题：方正小标宋_GBK 二号</li>
+            <li><span class="list-icon">📝</span> 正文：方正仿宋_GBK 三号</li>
+            <li><span class="list-icon">📌</span> 一级标题：方正黑体_GBK 三号【一、】</li>
+            <li><span class="list-icon">📌</span> 二级标题：方正楷体_GBK 三号【（1）】</li>
+            <li><span class="list-icon">📌</span> 三级标题：方正仿宋_GBK 三号 加粗【1.】</li>
+            <li><span class="list-icon">📎</span> 行文机构：正文下空三行 仿宋_GBK 三号</li>
+            <li><span class="list-icon">📏</span> 成文日期：右空四格</li>
+            <li><span class="list-icon">📄</span> 页码：四号半角宋体</li>
+            <li><span class="list-icon">📐</span> 页边距：上3.7cm、下3.5cm、左2.8cm、右2.6cm</li>
+        </ul>
+    </div>
+
+    <div class="preview-grid">
+        <!-- 原有卡片1 -->
+        <div class="preview-card">
+            <div class="preview-header">
+                <div class="preview-icon">📐</div>
+                <div class="preview-title">公文格式规范图解</div>
+            </div>
+            <div class="preview-desc">查看完整的公文格式设置图解，包含字体、段落、页边距等详细说明。</div>
+            <button class="preview-btn" onclick="openModal('format')">
+                <span>🔍</span> 点击预览格式规范
+            </button>
+        </div>
+        
+        <!-- 原有卡片2 -->
+        <div class="preview-card">
+            <div class="preview-header">
+                <div class="preview-icon">📑</div>
+                <div class="preview-title">请示、报告规范图解</div>
+            </div>
+            <div class="preview-desc">查看请示和报告的撰写规范、格式要求及示例说明。</div>
+            <button class="preview-btn orange" onclick="openModal('report')">
+                <span>🔍</span> 点击预览请示报告规范
+            </button>
+        </div>
+        
+        <!-- 新增报销单据卡片 -->
+        <div class="preview-card">
+            <div class="preview-header">
+                <div class="preview-icon" style="background: #dbeafe;">💰</div>
+                <div class="preview-title">报销单据填写模板</div>
+            </div>
+            <div class="preview-desc">查看报销单据的标准填写格式，包含费用报销单、差旅费报销单等模板示例。</div>
+            <button class="preview-btn" style="background: linear-gradient(135deg, #059669, #047857);" onclick="openModal('reimbursement')">
+                <span>🔍</span> 点击预览报销模板
+            </button>
+        </div>
+    </div>
+
+    <div class="tip-box">
+        <strong>💡 提示：</strong>点击预览按钮查看详细图解，支持多张图片浏览。建议保存图片到本地参考使用。
     </div>
 </div>
 
-<div class="tip-box">
-    <strong>💡 提示：</strong>点击预览按钮查看详细图解，支持多张图片浏览。建议保存图片到本地参考使用。
-</div>
-</div>
 
-             <!-- 环境维护页面 -->
+        <!-- 环境维护页面 -->
         <div class="page" id="page-env">
             <div class="page-header">
                 <h1>🌿 办公环境维护</h1>
@@ -1316,58 +1363,61 @@
             </div>
         </div>
 
-<!-- 公众号页面 -->
-<div class="page" id="page-wechat">
-    <div class="page-header">
-        <h1>📱 科产集团公众号</h1>
-        <p>扫码关注，获取最新资讯</p>
-    </div>
+        <!-- 公众号页面 -->
+        <div class="page" id="page-wechat">
+            <div class="page-header">
+                <h1>📱 科产集团公众号</h1>
+                <p>扫码关注，获取最新资讯</p>
+            </div>
 
-    <div class="card wechat-card">
-        <div class="card-header">
-            <div class="card-icon">📱</div>
-            <div class="card-title">关注公众号</div>
-        </div>
-        <p style="color: #64748b; margin-bottom: 20px;">请使用微信扫描下方二维码，关注科产集团官方公众号，获取最新企业动态、活动通知等信息。</p>
-        
-        <!-- 公众号主页 -->
-        <div class="image-container" onclick="showSingleImage('8.jpg', '公众号主页')">
-            <img src="8.jpg" alt="公众号主页" loading="lazy">
-            <div class="image-caption">公众号主页</div>
-        </div>
+            <div class="card wechat-card">
+                <div class="card-header">
+                    <div class="card-icon">📱</div>
+                    <div class="card-title">关注公众号</div>
+                </div>
+                <p style="color: #64748b; margin-bottom: 20px;">请使用微信扫描下方二维码，关注科产集团官方公众号，获取最新企业动态、活动通知等信息。</p>
+                
+                <!-- 公众号主页 -->
+                <div class="image-container" onclick="showSingleImage('8.jpg', '公众号主页')">
+                    <img src="8.jpg" alt="公众号主页" loading="lazy">
+                    <div class="image-caption">公众号主页</div>
+                </div>
 
-<!-- 公众号二维码 -->
-        <div class="image-container" onclick="showSingleImage('7.jpg', '公众号二维码')">
-            <img src="7.jpg" alt="公众号二维码">
-            <div class="image-caption">公众号二维码</div>
-        </div>
-    </div>
+                <!-- 公众号二维码 -->
+                <div class="image-container" onclick="showSingleImage('7.jpg', '公众号二维码')">
+                    <img src="7.jpg" alt="公众号二维码">
+                    <div class="image-caption">公众号二维码</div>
+                </div>
+            </div>
 
-    <div class="tip-box">
-        <strong>💡 提示：</strong>关注公众号后，可及时接收企业通知、活动预告等信息。如有问题，可通过公众号留言咨询。
-    </div>
-</div>
+            <div class="tip-box">
+                <strong>💡 提示：</strong>关注公众号后，可及时接收企业通知、活动预告等信息。如有问题，可通过公众号留言咨询。
+            </div>
+        </div>
 
     </main>
 
-<!-- 图片弹窗 -->
-<div class="modal-overlay" id="modal" onclick="closeModal(event)">
-    <div class="modal-content" onclick="event.stopPropagation()">
-        <div class="modal-header">
-            <span class="modal-title" id="modalTitle">图片预览</span>
-            <button class="modal-close" onclick="closeModal()">✕</button>
+    <!-- 图片弹窗 -->
+    <div class="modal-overlay" id="modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <span class="modal-title" id="modalTitle">图片预览</span>
+                <div style="display: flex; align-items: center;">
+                    <button class="zoom-reset" id="zoomReset" onclick="resetZoom()">↺ 重置</button>
+                    <button class="modal-close" onclick="closeModal()">✕</button>
+                </div>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- 动态插入图片包装器 -->
+            </div>
+            <div class="zoom-hint" id="zoomHint">双指捏合缩放 / 滚轮缩放 / 拖拽移动</div>
+            <!-- 左右切换按钮 -->
+            <button class="modal-nav prev" id="prevBtn" onclick="prevImage()">‹</button>
+            <button class="modal-nav next" id="nextBtn" onclick="nextImage()">›</button>
+            <!-- 图片计数器 -->
+            <div class="modal-counter" id="modalCounter">1 / 1</div>
         </div>
-        <div class="modal-body" id="modalBody">
-            <!-- 动态插入图片 -->
-        </div>
-        <!-- 左右切换按钮 -->
-        <button class="modal-nav prev" id="prevBtn" onclick="prevImage()">‹</button>
-        <button class="modal-nav next" id="nextBtn" onclick="nextImage()">›</button>
-        <!-- 图片计数器 -->
-        <div class="modal-counter" id="modalCounter">1 / 1</div>
     </div>
-</div>
-
 
     <!-- 提示消息 -->
     <div class="toast" id="toast">已复制到剪贴板！</div>
@@ -1480,142 +1530,307 @@
             }, 2000);
         }
 
-let modalImages=[], currentIndex=0;
-let touchStartX = 0;
-let touchEndX = 0;
+        // 图片缩放相关变量
+        let modalImages = [], currentIndex = 0;
+        let scale = 1, panning = false;
+        let pointX = 0, pointY = 0;
+        let startX = 0, startY = 0;
+        let initialDistance = 0, initialScale = 1;
+        let lastTouchTime = 0;
+        let isPinching = false;
 
-// PNG 单图（打印机用）
-function showSingleImage(src, title){
-    const modal=document.getElementById('modal');
-    modal.classList.add('active');
-    document.body.style.overflow='hidden';
-    modalImages=[src];
-    currentIndex=0;
-    updateModalUI(title);
-}
+        // PNG 单图（打印机用）
+        function showSingleImage(src, title) {
+            const modal = document.getElementById('modal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            modalImages = [src];
+            currentIndex = 0;
+            resetZoomState();
+            updateModalUI(title);
+            showZoomHint();
+        }
 
-// JPG 多图（公文格式和请示报告用）
-function openModal(type){
-    const modal=document.getElementById('modal');
-    modal.classList.add('active');
-    document.body.style.overflow='hidden';
-    
-    if(type==='format'){
-        modalImages=['images/format/1.jpg','images/format/2.jpg'];
-    }
-    else if(type==='report'){
+        // JPG 多图（公文格式和请示报告用）
+        function openModal(type) {
+            const modal = document.getElementById('modal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            if (type === 'format') {
+                modalImages = ['images/format/1.jpg', 'images/format/2.jpg'];
+            } else if (type === 'report') {
+                modalImages = [
+                    'images/report/3.jpg',
+                    'images/report/4.jpg',
+                    'images/report/5.jpg',
+                    'images/report/6.jpg'
+                ];
+            }
+            
+else if(type==='reimbursement'){
         modalImages=[
-            'images/report/3.jpg',
-            'images/report/4.jpg',
-            'images/report/5.jpg',
-            'images/report/6.jpg'
+            'images/reimbursement/1.png',
+            'images/reimbursement/2.png',
+            'images/reimbursement/3.png'
         ];
     }
+let title = '图片预览';
+    if(type==='format') title='公文格式';
+    else if(type==='report') title='请示报告';
+    else if(type==='reimbursement') title='报销单据填写模板';
     
-    currentIndex=0;
-    updateModalUI(type==='format'?'公文格式':'请示报告');
-}
-
-// 更新弹窗UI（显示图片+按钮状态+计数器）
-function updateModalUI(title){
-    const body=document.getElementById('modalBody');
-    const modalTitle=document.getElementById('modalTitle');
-    const prevBtn=document.getElementById('prevBtn');
-    const nextBtn=document.getElementById('nextBtn');
-    const counter=document.getElementById('modalCounter');
-    
-    // 显示当前图片
-    body.innerHTML=`<img src="${modalImages[currentIndex]}" alt="预览图片" id="modalImg">`;
-    modalTitle.textContent=title || '图片预览';
-    
-    // 更新计数器
-    counter.textContent=`${currentIndex + 1} / ${modalImages.length}`;
-    
-    // 控制按钮显示/隐藏
-    if(modalImages.length <= 1){
-        prevBtn.style.display='none';
-        nextBtn.style.display='none';
-        counter.style.display='none';
-    } else {
-        prevBtn.style.display='flex';
-        nextBtn.style.display='flex';
-        counter.style.display='block';
-        prevBtn.disabled = currentIndex === 0;
-        nextBtn.disabled = currentIndex === modalImages.length - 1;
-    }
-    
-    // 绑定触摸事件
-    const img = document.getElementById('modalImg');
-    if(img){
-        img.addEventListener('touchstart', handleTouchStart, {passive: true});
-        img.addEventListener('touchend', handleTouchEnd, {passive: true});
-    }
-}
-
-// 上一张
-function prevImage(){
-    if(currentIndex > 0){
-        currentIndex--;
-        updateModalUI();
-    }
-}
-
-// 下一张
-function nextImage(){
-    if(currentIndex < modalImages.length - 1){
-        currentIndex++;
-        updateModalUI();
-    }
-}
-
-// 触摸滑动处理
-function handleTouchStart(e){
-    touchStartX = e.changedTouches[0].screenX;
-}
-
-function handleTouchEnd(e){
-    touchEndX = e.changedTouches[0].screenX;
-    handleSwipe();
-}
-
-function handleSwipe(){
-    const swipeThreshold = 50;
-    const diff = touchStartX - touchEndX;
-    
-    if(Math.abs(diff) > swipeThreshold){
-        if(diff > 0){
-            // 向左滑，下一张
-            nextImage();
-        } else {
-            // 向右滑，上一张
-            prevImage();
+    updateModalUI(title);
+    showZoomHint();
         }
-    }
-}
 
-// 键盘左右键支持
-document.addEventListener('keydown', e=>{
-    if(e.key==='Escape') closeModal();
-    if(e.key==='ArrowLeft') prevImage();
-    if(e.key==='ArrowRight') nextImage();
-});
+        // 重置缩放状态
+        function resetZoomState() {
+            scale = 1;
+            pointX = 0;
+            pointY = 0;
+            updateTransform();
+            const resetBtn = document.getElementById('zoomReset');
+            if (resetBtn) resetBtn.classList.remove('show');
+        }
 
-// 关闭
-function closeModal(e){
-    if(!e || e.target.id==='modal' || e.target.closest('.modal-close')){
-        const modal=document.getElementById('modal');
-        modal.classList.remove('active');
-        document.body.style.overflow='';
-        setTimeout(()=>{
-            document.getElementById('modalBody').innerHTML='';
-            modalImages=[];
-            currentIndex=0;
-        }, 300);
-    }
-}
+        // 更新变换
+        function updateTransform() {
+            const wrapper = document.getElementById('imgWrapper');
+            if (wrapper) {
+                wrapper.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
+            }
+            const resetBtn = document.getElementById('zoomReset');
+            if (resetBtn) {
+                if (scale !== 1 || pointX !== 0 || pointY !== 0) {
+                    resetBtn.classList.add('show');
+                } else {
+                    resetBtn.classList.remove('show');
+                }
+            }
+        }
 
-document.addEventListener('keydown', e=>{if(e.key==='Escape') closeModal();});
+        // 显示缩放提示
+        function showZoomHint() {
+            const hint = document.getElementById('zoomHint');
+            if (hint) {
+                hint.classList.add('show');
+                setTimeout(() => hint.classList.remove('show'), 3000);
+            }
+        }
 
+        // 重置缩放
+        function resetZoom() {
+            resetZoomState();
+        }
+
+        // 更新弹窗UI
+        function updateModalUI(title) {
+            const body = document.getElementById('modalBody');
+            const modalTitle = document.getElementById('modalTitle');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const counter = document.getElementById('modalCounter');
+            
+            // 创建图片包装器
+            body.innerHTML = `
+                <div class="img-wrapper" id="imgWrapper">
+                    <img src="${modalImages[currentIndex]}" alt="预览图片" id="modalImg" draggable="false">
+                </div>
+            `;
+            if (modalTitle) modalTitle.textContent = title || '图片预览';
+            
+            // 更新计数器
+            if (counter) counter.textContent = `${currentIndex + 1} / ${modalImages.length}`;
+            
+            // 控制按钮显示/隐藏
+            if (modalImages.length <= 1) {
+                if (prevBtn) prevBtn.style.display = 'none';
+                if (nextBtn) nextBtn.style.display = 'none';
+                if (counter) counter.style.display = 'none';
+            } else {
+                if (prevBtn) prevBtn.style.display = 'flex';
+                if (nextBtn) nextBtn.style.display = 'flex';
+                if (counter) counter.style.display = 'block';
+                if (prevBtn) prevBtn.disabled = currentIndex === 0;
+                if (nextBtn) nextBtn.disabled = currentIndex === modalImages.length - 1;
+            }
+            
+            // 绑定事件
+            setTimeout(bindZoomEvents, 0);
+        }
+
+        // 绑定缩放事件
+        function bindZoomEvents() {
+            const wrapper = document.getElementById('imgWrapper');
+            const body = document.getElementById('modalBody');
+            
+            if (!wrapper || !body) return;
+            
+            // 鼠标滚轮缩放
+            body.onwheel = handleWheel;
+            
+            // 触摸事件
+            body.ontouchstart = handleTouchStart;
+            body.ontouchmove = handleTouchMove;
+            body.ontouchend = handleTouchEnd;
+            
+            // 鼠标拖拽
+            wrapper.onmousedown = handleMouseDown;
+        }
+
+        // 鼠标滚轮处理
+        function handleWheel(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const delta = e.deltaY > 0 ? 0.9 : 1.1;
+            const newScale = Math.min(Math.max(scale * delta, 0.5), 4);
+            
+            if (newScale !== scale) {
+                scale = newScale;
+                // 以鼠标位置为中心缩放（简化版：以图片中心缩放）
+                updateTransform();
+            }
+        }
+
+        // 触摸开始
+        function handleTouchStart(e) {
+            lastTouchTime = Date.now();
+            
+            if (e.touches.length === 2) {
+                // 双指缩放
+                e.preventDefault();
+                isPinching = true;
+                initialDistance = getDistance(e.touches[0], e.touches[1]);
+                initialScale = scale;
+            } else if (e.touches.length === 1) {
+                // 单指拖拽
+                startX = e.touches[0].clientX - pointX;
+                startY = e.touches[0].clientY - pointY;
+                panning = true;
+            }
+        }
+
+        // 触摸移动
+        function handleTouchMove(e) {
+            if (e.touches.length === 2) {
+                // 双指缩放
+                e.preventDefault();
+                const currentDistance = getDistance(e.touches[0], e.touches[1]);
+                const delta = currentDistance / initialDistance;
+                scale = Math.min(Math.max(initialScale * delta, 0.5), 4);
+                updateTransform();
+            } else if (e.touches.length === 1 && panning && scale > 1) {
+                // 单指拖拽（仅在放大时）
+                e.preventDefault();
+                pointX = e.touches[0].clientX - startX;
+                pointY = e.touches[0].clientY - startY;
+                updateTransform();
+            }
+        }
+
+        // 触摸结束
+        function handleTouchEnd(e) {
+            panning = false;
+            if (isPinching) {
+                isPinching = false;
+                // 如果缩放小于1，重置
+                if (scale < 1) {
+                    resetZoomState();
+                }
+            }
+        }
+
+        // 获取双指距离
+        function getDistance(touch1, touch2) {
+            const dx = touch1.clientX - touch2.clientX;
+            const dy = touch1.clientY - touch2.clientY;
+            return Math.sqrt(dx * dx + dy * dy);
+        }
+
+        // 鼠标拖拽处理
+        function handleMouseDown(e) {
+            if (scale > 1) {
+                e.preventDefault();
+                panning = true;
+                startX = e.clientX - pointX;
+                startY = e.clientY - pointY;
+                this.style.cursor = 'grabbing';
+                
+                // 临时绑定全局鼠标事件
+                document.onmousemove = handleMouseMove;
+                document.onmouseup = handleMouseUp;
+            }
+        }
+
+        function handleMouseMove(e) {
+            if (panning && scale > 1) {
+                e.preventDefault();
+                pointX = e.clientX - startX;
+                pointY = e.clientY - startY;
+                updateTransform();
+            }
+        }
+
+        function handleMouseUp() {
+            panning = false;
+            const wrapper = document.getElementById('imgWrapper');
+            if (wrapper) wrapper.style.cursor = 'grab';
+            document.onmousemove = null;
+            document.onmouseup = null;
+        }
+
+        // 上一张
+        function prevImage() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                resetZoomState();
+                updateModalUI();
+            }
+        }
+
+        // 下一张
+        function nextImage() {
+            if (currentIndex < modalImages.length - 1) {
+                currentIndex++;
+                resetZoomState();
+                updateModalUI();
+            }
+        }
+
+        // 键盘左右键支持
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') closeModal();
+            if (e.key === 'ArrowLeft') prevImage();
+            if (e.key === 'ArrowRight') nextImage();
+        });
+
+        // 关闭弹窗
+        function closeModal(e) {
+            const modal = document.getElementById('modal');
+            if (!e || e.target.id === 'modal' || e.target.closest('.modal-close')) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+                
+                // 清理事件
+                const body = document.getElementById('modalBody');
+                if (body) {
+                    body.onwheel = null;
+                    body.ontouchstart = null;
+                    body.ontouchmove = null;
+                    body.ontouchend = null;
+                }
+                
+                setTimeout(() => {
+                    const modalBody = document.getElementById('modalBody');
+                    if (modalBody) modalBody.innerHTML = '';
+                    modalImages = [];
+                    currentIndex = 0;
+                    resetZoomState();
+                }, 300);
+            }
+        }
     </script>
 </body>
 </html>
